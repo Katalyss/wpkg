@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Marble"
+    name="Marble : Globe Virtuel et Atlas Mondial Open-Source"
+    revision="%version%.2"
+    reboot="false"
+    priority="50"> 
+    
+    <variable name="version" value="2.2.0" /> 
+    <variable architecture="x86" name="platf" value="x86" />
+    <variable architecture="x64" name="platf" value="x64" />
+    
+    <eoledl dl="https://files.kde.org/marble/downloads/windows/Marble-setup_%version%_x86.exe" destname="marble/marble-setup_%version%_x86.exe" />
+    <eoledl dl="https://files.kde.org/marble/downloads/windows/Marble-setup_%version%-1_x64.exe" destname="marble/marble-setup_%version%_x64.exe" />
+
+    <check type="logical" condition="or">
+        <check type="file" condition="sizeequals" path="%PROGRAMFILES%\Marble\marble-qt.exe" value="271360" />
+        <check type="file" condition="sizeequals" path="%PROGRAMFILES%\Marble\marble-qt.exe" value="329216" />
+    </check>
+
+    <!--
+    <install timeout='150' cmd='%COMSPEC% /c if exist "%progfiles%\VideoLAN\VLC\uninstall.exe" "%progfiles%\VideoLAN\VLC\uninstall.exe" /S _?=%progfiles%\VideoLAN\VLC'/>
+    <install timeout='150' cmd='%COMSPEC% /C if exist "%progfiles%\VideoLAN\VLC" rmdir /S /Q "%progfiles%\VideoLAN"'/>
+    -->
+    <install timeout='150' cmd='%COMSPEC% /C start /wait "Marble" "%SOFTWARE%\marble\marble-setup_%version%_%platf%.exe" /S /NCRC /D="%progfiles%"'/>
+
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+    <remove cmd='%SOFTWARE%\marble\uninstall.exe /S'>
+        <exit code="any" />
+    </remove>
+    <remove cmd='%COMSPEC% /C rmdir /S /Q "%PROGRAMFILES%\marble"'>
+        <exit code="any" />
+    </remove>
+
+</package>
+</packages>

@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="SweetHome3D"
+    name="Sweet Home 3D"
+    reboot="false"
+    revision="%version%"
+    priority="11">
+
+    <variable name="version" value="6.2" />
+
+    <eoledl  dl="http://sourceforge.net/projects/sweethome3d/files/SweetHome3D/SweetHome3D-%version%/SweetHome3D-%version%-windows.exe/download" destname="SweetHome3D\SweetHome3D-%version%-windows-oc.exe"  />
+    <eoledl  dl="http://www.sweethome3d.com/SweetHome3D.l4j.ini" destname="SweetHome3D\SweetHome3D.l4j.ini"  />
+
+    <check type="logical" condition="or">
+        <check type="file" condition="exists" path="%PROGRAMFILES%\Sweet Home 3D\SweetHome3D.exe" />
+        <check type="file" condition="exists" path="%PROGRAMFILES(x86)%\Sweet Home 3D\SweetHome3D.exe" />
+    </check>
+
+    <install cmd='"%SOFTWARE%\SweetHome3D\SweetHome3D-%version%-windows-oc.exe" /sp- /verysilent' />
+    <install cmd='%ComSpec% /c copy "%SOFTWARE%\SweetHome3D\SweetHome3D.l4j.ini" "%ProgramFiles%\Sweet Home 3D" /Y' />
+
+    <upgrade include="install" />
+    <downgrade include="install" />
+
+    <remove cmd='%ComSpec% /c del /f /q "%ProgramFiles%\Sweet Home 3D\SweetHome3D.l4j.ini"' />
+    <remove cmd='"%PROGRAMFILES%\Sweet Home 3D\unins000.exe" /verysilent' />
+
+</package>
+</packages>
