@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<packages>
+<package
+        id="disablescribemaj"
+        name="Désactiver le service de MAJ du client Scribe"
+        priority="10"
+        execute="always">
+
+        <install cmd='sc delete servupdate' >
+            <exit code='any' />
+        </install>
+
+</package>
+</packages>

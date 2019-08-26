@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="dynamic"
+    name="Dynamic v2.61"
+    revision="2.52"
+    reboot="false"
+    priority="5"
+    category="Sciences physiques" 
+    lnk = "Dynamic.lnk" >
+
+<!-- http://dynamicfreeware.free.fr/Setup_dyn261.exe  4 953 971 octets Installeur : Clickteam Install Creator (pas d'installation silentieuse)    -->
+
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~2" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\System32\cscript.exe" architecture="x86"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\SysWOW64\cscript.exe" architecture="x64"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="dossier" value="Dynamic"/>
+    <variable name="Doscribe" value="dynamic"/>
+    <variable name="EXE" value="Setup_dyn261.exe"/>
+    <variable name="logiciel" value="Dynamic"/>
+
+    <eole dl="http://dynamicfreeware.free.fr/%EXE%" destname="%Doscribe%/%EXE%"/>
+    <eole dl="http://dev-eole.ac-dijon.fr/attachments/download/687/%logiciel%.ini" destname="%Doscribe%/%logiciel%.ini"/>
+    <eole dl="http://dev-eole.ac-dijon.fr/attachments/download/686/remove-%logiciel%.ini" destname="%Doscribe%/remove-%logiciel%.ini"/>
+
+    <check type="uninstall" condition="exists" path="Dynamic 2.61" />
+
+    <install cmd='%ComSpec% /C net use Q: %SOFTWARE% /Y'><exit code="2"/>
+    </install>
+    <install cmd='%ComSpec% /c start "install" /wait %SOFTWARE%\tools\autoit-auto.exe  %SOFTWARE%\%Doscribe%\%logiciel%.ini' />
+    <install cmd='%ComSpec% /C net use /DELETE Q: /Y'/>
+    <install cmd="%ComSpec% /C TASKKILL /F /IM %logiciel%.exe"><exit code="128" reboot="false"/>
+    </install>
+
+    <install cmd='%SOFTWARE%\tools\nircmd.exe shortcut "%ProgramFiles%\%dossier%\%logiciel%.exe" "%AllUsersPrograms%" "%logiciel%"' />
+
+<!-- attribution des droits en écriture pour à les Utilisateurs pour le fichier %logiciel%.ini -->
+
+    <install cmd='%SOFTWARE%\tools\setacl\x86\SetAcl.exe -on "%PROGRAMFILES%\%dossier%" -ot file -actn ace -ace "n:Utilisateurs;p:add_file,write_attr;m:grant"'/>
+
+    <upgrade include="remove" />
+    <upgrade include="install" />
+
+    <downgrade include="upgrade" />
+
+    <remove cmd='%ComSpec% /C net use Q: %SOFTWARE% /Y'><exit code="2"/>
+    </remove>
+    <remove cmd='%ComSpec% /c if exist "%PROGRAMFILES%\%dossier%\Uninstal.exe" start "remove" /wait %SOFTWARE%\tools\autoit-auto.exe  %SOFTWARE%\%Doscribe%\remove-%logiciel%.ini' />
+    <remove cmd='%ComSpec% /C net use /DELETE Q: /Y'/>
+    <remove cmd='%ComSpec% /C If exist "%PROGRAMFILES%\%dossier%" rmdir /S /Q "%PROGRAMFILES%\%dossier%"'/>
+
+</package>
+</packages>

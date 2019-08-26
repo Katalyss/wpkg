@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="alimentation"
+    name="parametres d'alimentations pour les postes Seven (toujours allumé + écran veille 15 min)"
+    revision="1"
+    priority="10"
+    category="Système"
+    execute="once">
+            
+    <variable name="modalim" value="alim_scribe"/>
+    <variable name="schema" value="95f98261-9152-4e43-a42a-281628fd5495"/>
+
+    <install cmd='%ComSpec% /C powercfg -import %SOFTWARE%\windows\%modalim%.pow %schema%'/>
+    <install cmd='%ComSpec% /C powercfg -s %schema%'/>
+
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>    
+
+</package>
+</packages>

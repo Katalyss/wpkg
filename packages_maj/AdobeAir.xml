@@ -1,0 +1,37 @@
+<package id="AdobeAir"
+    name="AdobeAir"
+    revision="%version%.1"
+    priority="10">
+
+<variable name="version" value="32.0.0.125" />
+<variable name="version_court" value="32.0" />
+
+<eoledl dl="http://airdownload.adobe.com/air/win/download/%version_court%/AdobeAIRInstaller.exe" destname="adobeair\AdobeAIRInstaller%version%.exe" />
+
+ <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+ <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+ <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+ <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+ <variable name="CommonFiles" value="%PROGRAMFILES%\Fichiers communs" architecture="x86"/>
+ <variable name="CommonFiles" value="%PROGRAMFILES%\Common Files" architecture="x64"/>
+ <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x86"/>
+ <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x64"/>
+
+ <check type="uninstall" condition="exists" path="Adobe AIR" />
+ <check type="registry" condition="equals" path="%BDR%\Adobe AIR\DisplayVersion" value="%version%" />
+
+ <install cmd='%COMSPEC% /c copy /y "%SOFTWARE%\adobeair\AdobeAIRInstaller%version%.exe" %temp%' />
+ <install cmd='%temp%\AdobeAIRInstaller%version%.exe -silent' /> 
+
+        <!-- Desactivation auto-update -->
+ <install cmd='%COMSPEC% /c REG ADD "HKLM\SOFTWARE\Policies\Adobe\AIR" /v "UpdateDisabled" /d "1" /t REG_DWORD /f' />
+
+ <upgrade include="remove" />
+ <upgrade include="install" />
+
+ <downgrade include="upgrade" />
+
+ <remove cmd='%COMSPEC% /c copy /y "%SOFTWARE%\adobeair\AdobeAIRInstaller%version%.exe" %temp%' />
+ <remove cmd='%temp%\AdobeAIRInstaller%version%.exe -uninstall' /> 
+
+</package>

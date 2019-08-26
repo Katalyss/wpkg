@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="AdobeReader"
+    name="Adobe Reader - logiciel de lecture PDF"
+    revision="%version_7%.1"
+    priority="200"
+    reboot="false">
+
+    <!-- Gestion de versions différentes en fonction de l'OS -->
+    <!-- 7, 8, 8.1 : 11.0.10 ; Vista : 10.1.4 ; XP : 11.0.08 -->
+    <variable name="version_7" value="11.0.10" />
+    <variable name="version_7_court" value="11010" />
+    <variable name="version_Vista" value="10.1.4" />
+    <variable name="version_Vista_court" value="1014" />
+    <variable name="version_XP" value="11.0.08" />
+    <variable name="version_XP_court" value="11008" />
+    <variable name="locale" value="fr_FR" />
+
+    <variable name="PROGFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+
+    <eoledl dl="ftp://ftp.adobe.com/pub/adobe/reader/win/11.x/%version_7%/%locale%/AdbeRdr%version_7_court%_%locale%.exe" destname="adobereader\AdbeRdr%version_7_court%_%locale%.exe" />
+    <eoledl dl="ftp://ftp.adobe.com/pub/adobe/reader/win/10.x/%version_Vista%/%locale%/AdbeRdr%version_Vista_court%_%locale%.exe" destname="adobereader\AdbeRdr%version_Vista_court%_%locale%.exe" />
+    <eoledl dl="ftp://ftp.adobe.com/pub/adobe/reader/win/11.x/%version_XP%/%locale%/AdbeRdr%version_XP_court%_%locale%.exe" destname="adobereader\AdbeRdr%version_XP_court%_%locale%.exe" />
+
+    <check os=".+6\.[1-3]\.\d{4}" type="uninstall" condition="exists" path="Adobe Reader XI (%version_7%) - Français" />
+    <check os=".+6\.0\.\d{4}" type="uninstall" condition="exists" path="Adobe Reader X (%version_Vista%) - Français" />
+    <check os=".+5\.[1-2]\.\d{4}" type="uninstall" condition="exists" path="Adobe Reader XI (%version_XP%) - Français" />
+    <check os=".+6\.[1-3]\.\d{4}" type="file" condition="versiongreaterorequal" path="%PROGFILES%\Adobe\Reader 11.0\Reader\AcroRd32.exe" value="%version_7%" />
+    <check os=".+6\.0\.\d{4}" type="file" condition="versiongreaterorequal" path="%PROGFILES%\Adobe\Reader 10.0\Reader\AcroRd32.exe" value="%version_Vista%" />
+    <check os=".+5\.[1-2]\.\d{4}" type="file" condition="versiongreaterorequal" path="%PROGFILES%\Adobe\Reader 11.0\Reader\AcroRd32.exe" value="%version_XP%" />
+
+    <install os=".+6\.[1-3]\.\d{4}" cmd='%SOFTWARE%\adobereader\AdbeRdr%version_7_court%_%locale%.exe /sAll /rs' >
+            <exit code='0' />
+            <exit code='3010' />
+    </install>
+    <install os=".+6\.0\.\d{4}" cmd='%SOFTWARE%\adobereader\AdbeRdr%version_Vista_court%_%locale%.exe /sAll /rs' >
+            <exit code='0' />
+            <exit code='3010' />
+    </install>
+    <install os=".+5\.[1-2]\.\d{4}" cmd='%SOFTWARE%\adobereader\AdbeRdr%version_XP_court%_%locale%.exe /sAll /rs' >
+            <exit code='0' />
+            <exit code='3010' />
+    </install>
+
+    <!-- Desactive auto-update -->
+    <install cmd='%COMSPEC% /c REG ADD "HKLM\SOFTWARE\Wow6432Node\Adobe\Adobe ARM\1.0\ARM" /v "iCheck" /d "0" /t REG_DWORD /f' architecture="x64" />
+    <install cmd='%COMSPEC% /c REG ADD "HKLM\SOFTWARE\Adobe\Adobe ARM\1.0\ARM" /v "iCheck" /d "0" /t REG_DWORD /f' architecture="x86" />
+
+    <!-- Desactive les processus lances automatiquement -->
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Adobe ARM" /f' architecture="x64" >
+            <exit code="any" />
+    </install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Reader Speed Launcher" /f' architecture="x64" >
+            <exit code="any" />
+    </install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "AdobeAAMUpdater-1.0" /f'  architecture="x64" >
+            <exit code="any" />
+    </install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe ARM" /f' architecture="x86" >
+            <exit code="any" />
+    </install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Reader Speed Launcher" /f' architecture="x86" >
+            <exit code="any" />
+    </install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "AdobeAAMUpdater-1.0" /f' architecture="x86" >
+            <exit code="any" />
+    </install>
+    <upgrade include="install" />
+    <downgrade include="install" />
+
+    <!-- Pour la version en français -->
+    <remove cmd='msiexec /qn /x{AC76BA86-7AD7-1036-7B44-AA1000000001}' >
+            <exit code="0" />
+    </remove>
+
+</package>
+</packages>

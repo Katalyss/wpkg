@@ -1,0 +1,37 @@
+﻿<package
+    id="7zip" 
+        name="7-Zip - logiciel compression decompression" 
+        revision="%version%.1"
+        priority="70" 
+        reboot="false">
+
+    <variable name="version" value="1900"/>
+    <variable name="version_point" value="19.00"/>
+
+  <!-- telechargement des 2 binaires -->
+<eoledl dl="http://www.7-zip.org/a/7z%version%.msi" destname="7zip\7z%version%.msi"/>
+<eoledl dl="http://www.7-zip.org/a/7z%version%-x64.msi" destname="7zip\7z%version%-x64.msi"/>
+
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+
+<check type='logical' condition='or'>
+    <check type='uninstall' condition='exists' path='7-Zip %version_point%' architecture="x86"/>
+    <check type='uninstall' condition='exists' path='7-Zip %version_point% (x64 edition)' architecture="x64"/>
+</check>
+ 
+  <!-- installation du msi 32 bits -->
+<install cmd='msiexec /i "%SOFTWARE%\7zip\7z%version%.msi" /qn' architecture='x86'/>
+  <!-- desinstallation de la version 32 bits si elle existe sur les postes Seven -->
+<install cmd='msiexec /x {23170F69-40C1-2701-1514-000001000000} /qn' architecture='x64'><exit code='0'/><exit code='1605'/></install>
+  <!-- installation du msi 64 bits -->
+<install cmd='msiexec /i "%SOFTWARE%\7zip\7z%version%-x64.msi" /qn' architecture='x64'/>
+
+<upgrade include='install'/>
+
+<remove cmd='msiexec /x "%SOFTWARE%\7zip\7z%version%.msi" /qn' architecture='x86'/>
+<remove cmd='msiexec /x "%SOFTWARE%\7zip\7z%version%-x64.msi" /qn' architecture='x64'/>
+
+</package>

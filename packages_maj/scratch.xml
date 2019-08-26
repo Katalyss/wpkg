@@ -1,0 +1,60 @@
+<package id="Scratch" 
+        name="Scratch - logiciel de programmation ludique pour jeunes" 
+        revision="%version%.%version_long%.1"
+        priority="70" 
+        reboot="false" >
+<variable name="version" value="3" />
+<variable name="version_dl" value="5.0" />
+
+<variable name="version_long" value="5.0" />
+<depends package-id="AdobeAir" />
+
+<eoledl dl="https://downloads.scratch.mit.edu/desktop/Scratch%20Desktop%20Setup%20%version%.%version_long%.exe" destname="Scratch\Scratch Desktop Setup %version%.%version_long%.exe" />
+
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x86"/>
+    <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x64"/>
+    
+    
+<check type="uninstall" condition="versionequalto" path="Scratch 2 Offline Editor" value="%version_long%" />
+ 
+ 
+    <!-- desinstallation de la precedente version (1.4), sortie 1605 si la version n existe pas -->
+    <install timeout='300' cmd='msiexec /x "%SOFTWARE%\Scratch\Scratch1.4.msi" /qn' ><exit code='any' /></install>
+
+    <!-- desinstallation de la precedente version (2.0.439.3), sortie 1605 si la version n existe pas -->
+    <install cmd='MsiExec.exe /passive /X {8F310DDA-260A-4DB5-B81E-97BD6A697689}' ><exit code='any' /></install>
+    
+    <!-- desinstallation de la precedente version (2.0.440.0), sortie 1605 si la version n existe pas -->
+    <install cmd='MsiExec.exe /passive /X {AC6ADB8C-D6E8-4BAE-8A37-5B212410E36A}' ><exit code='any' /></install>
+
+    <!-- desinstallation de la precedente version (2.0.447.0), sortie 1605 si la version n existe pas -->
+    <install cmd='MsiExec.exe /passive /X {CF8D1D99-D2A5-4153-8A70-6C4636C00874}' ><exit code='any' /></install>
+    
+    <!-- desinstallation de la precedente version (2.0.454), sortie 1605 si la version n existe pas -->
+    <install cmd='MsiExec.exe /passive /X {23E3A089-3169-48E8-A67B-30BBEAAF09B4}' ><exit code='any' /></install>
+
+    <!-- desinstallation de la precedente version (2.0.456.0.1), sortie 1605 si la version n existe pas -->
+    <install cmd='MsiExec.exe /passive /X {797A7277-09F9-015D-C2BE-38BC66E24253}' ><exit code='any' /></install>
+
+    <!-- desinstallation de la precedente version (2.0.456.0.4), sortie 1605 si la version n existe pas -->
+    <install cmd='MsiExec.exe /passive /X {0C26944B-94CF-F315-D5E3-2E7186A3CCF9}' ><exit code='any' /></install>
+    
+    
+    <!-- installation silencieuse -->
+    <install cmd='"%SOFTWARE%\Scratch\Scratch-%version_dl%.exe" -silent  -eulaAccepted -desktopShortcut -programMenu -allowDownload' />
+    <install cmd='cmd /c copy "%SOFTWARE%\Scratch\application.xml" "%PROGRAMFILES%\Scratch 2\META-INF\AIR\*" /Y' />
+    
+    <!-- Suppression de l'aide -->
+    <install cmd='%ComSpec% /C rmdir /S /Q "%PROGRAMFILES%\Scratch 2\static_tips\" '/>
+
+    <upgrade include="install" />
+    <downgrade include="upgrade" />
+
+    <!-- desinstallation -->
+    <remove cmd='MsiExec.exe /passive /X {73F7B8A1-D228-3F0F-EBC1-AB52977886F3}' />
+    <remove cmd='%ComSpec% /C rmdir /S /Q "%PROGRAMFILES%\Scratch 2\" '/> 
+</package>

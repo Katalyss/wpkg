@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="hexchat"
+    name="Hexchat"
+    revision="%version%"
+    reboot="false"
+    priority="10">
+
+    <variable name="version" value="2.9.6.1" />
+    <variable name="xpversion" value="2.9.4" />
+    
+    <eoledl dl="http://dl.hexchat.net/hexchat/HexChat%20%version%%20x86.exe" destname="hexchat/HexChat %version% x86.exe" />
+    <eoledl dl="http://dl.hexchat.net/hexchat/HexChat%20%version%%20x64.exe" destname="hexchat/HexChat %version% x64.exe" />
+    <eoledl dl="http://dl.hexchat.net/hexchat/HexChat%20%xpversion%%20x86.exe" destname="hexchat/HexChat Legacy %xpversion% x86.exe" />
+    <eoledl dl="http://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU3/vcredist_x86.exe" destname="hexchat/vcredist_x86.exe" />
+    <eoledl dl="http://download.microsoft.com/download/1/6/B/16B06F60-3B20-4FF2-B699-5E9B7962F9AE/VSU3/vcredist_x64.exe" destname="hexchat/vcredist_x64.exe" />
+
+    <check os='windows xp' type="uninstall" condition="versionequalto"      path="HexChat (x86)"    value="%xpversion%" />
+    <check os='windows 7' architecture="x86" type="uninstall" condition="exists" path="Microsoft Visual C.+ 2012 x86.*" />
+    <check os='windows 7' architecture="x64" type="uninstall" condition="exists" path="Microsoft Visual C.+ 2012 x64.*" />
+
+    <install timeout="300" os='windows xp' cmd='"%SOFTWARE%\hexchat\HexChat Legacy %xpversion% x86.exe" /VERYSILENT /NORESTART' />
+    <install timeout="300" os='windows 7' architecture="x86" cmd='"%SOFTWARE%\hexchat\HexChat %version% x86.exe" /VERYSILENT /NORESTART' />
+    <install timeout="300" os='windows 7' architecture="x86" cmd='"%SOFTWARE%\hexchat\vcredist_x86.exe" /quiet /install /norestart' />
+    <install timeout="300" os='windows 7' architecture="x64" cmd='"%SOFTWARE%\hexchat\HexChat %version% x64.exe" /VERYSILENT /NORESTART' />
+    <install timeout="300" os='windows 7' architecture="x64" cmd='"%SOFTWARE%\hexchat\vcredist_x64.exe" /quiet /install /norestart' />
+
+    <upgrade include='install' />
+    <downgrade include='install' />
+
+    <remove timeout="300" cmd='%COMSPEC% /c IF EXIST "%PROGRAMFILES%\HexChat\unins000.dat" "%PROGRAMFILES%\HexChat\unins000.exe" /VERYSILENT' />
+    <remove timeout="300" os='windows 7' architecture="x86" cmd='"%SOFTWARE%\hexchat\vcredist_x86.exe" /quiet /norestart /uninstall' />
+    <remove timeout="300" os='windows 7' architecture="x64" cmd='"%SOFTWARE%\hexchat\vcredist_x64.exe" /quiet /norestart /uninstall' />
+</package>
+</packages>

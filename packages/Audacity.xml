@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+    <package
+    id="Audacity"
+    name="Audacity + Lame"
+    revision="%version%"
+    reboot="false"
+    priority="80"
+    category="Multimédia"
+    lnk="Audacity.lnk">
+    <variable name="PROGFILES" value="%SystemDrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGFILES" value="%SystemDrive%\PROGRA~2" architecture="x64"/>
+    <variable name="version" value="2.1.2"/>
+    <variable name="lame_version" value="3.99.3"/>
+<!-- attention le téléchargement de audacity 2.1.2 ne fonctionnent pas, le lien est non standard, il faut le faire à la main-->
+    <eoledl dl="http://www.fosshub.com/Audacity.html/audacity-win-%version%.exe" destname="audacity/audacity-win-%version%.exe"/>
+    <eoledl dl="http://lame.buanzo.org/Lame_v%lame_version%_for_Windows.exe" destname="audacity/Lame_v%lame_version%_for_Windows.exe"/>
+
+
+    <check type="uninstall" condition="exists" path="Audacity %version%"/>
+    <check type="uninstall" condition="exists" path="LAME v%lame_version%.*"/>
+    <check type="file" condition="versiongreaterorequal" path="%PROGFILES%\Audacity\audacity.exe" value="%version%.0"/>
+    <check type="file" condition="versiongreaterorequal" path="%PROGFILES%\Lame For Audacity\lame.exe" value="3.99.2.3"/>
+
+    <install cmd="%SOFTWARE%\audacity\audacity-win-%version%.exe /sp- /silent /norestart"/>
+    <install cmd="%SOFTWARE%\audacity\Lame_v%lame_version%_for_Windows.exe /sp- /verysilent /norestart"/>
+
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+    <downgrade include="upgrade"/>
+
+    <remove cmd='%ComSpec% /C if exist "%PROGFILES%\Audacity\unins002.exe" "%PROGFILES%\Audacity\unins002.exe" /verysilent' timeout="30">
+    <exit code="-1"/>
+    </remove>
+
+    <remove cmd='%ComSpec% /C if exist "%PROGFILES%\Audacity\unins001.exe" "%PROGFILES%\Audacity\unins001.exe" /verysilent ' timeout="30">
+    <exit code="-1"/>
+    </remove>
+    <remove cmd='%ComSpec% /C if exist "%PROGFILES%\Audacity\unins000.exe" "%PROGFILES%\Audacity\unins000.exe" /verysilent ' timeout="30">
+    <exit code="-1"/>
+    </remove>
+    <remove cmd="taskkill /F /IM unins000.exe">
+    <exit code="0"/>
+    <exit code="128"/>
+    <exit code="-1073741515"/>
+    </remove>
+    <remove cmd="taskkill /F /IM unins001.exe">
+    <exit code="0"/>
+    <exit code="128"/>
+    <exit code="-1073741515"/>
+    </remove>
+    <remove cmd="taskkill /F /IM unins002.exe">
+    <exit code="0"/>
+    <exit code="128"/>
+    <exit code="-1073741515"/>
+    </remove>
+    <remove cmd='%ComSpec% /C if exist "%PROGFILES%\Audacity"  rmdir /S /Q  "%PROGFILES%\Audacity"'/>
+
+    <remove cmd='%ComSpec% /C if exist "%PROGFILES%\Lame for Audacity\unins000.exe" "%PROGFILES%\Lame for Audacity\unins000.exe" /verysilent' Timeout="120"/>
+    <remove cmd='taskkill /F /IM unins000.exe'>
+    <exit code="0"/>
+    <exit code="128"/>
+    <exit code="-1073741515"/>
+    </remove>
+    <remove cmd='%ComSpec% /C if exist "%PROGFILES%\Lame for Audacity"  rmdir /S /Q  "%PROGFILES%\Lame for Audacity"'/>
+
+</package>
+</packages>

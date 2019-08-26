@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="rendem2"
+    name="Rendement 2"
+    revision="3" 
+    reboot="false"
+    category="SVT"
+    lnk="%logiciel%.lnk"
+    priority="20">
+            
+    <depends package-id="7zip"/>
+    <depends package-id="windows311"/>
+    <depends package-id="nircmd"/>
+
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~2" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\System32\cscript.exe" architecture="x86"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\SysWOW64\cscript.exe" architecture="x64"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="logiciel" value="rendem2"/>
+    <variable name="dossier" value="dos\SVT\%logiciel%"/>
+    <variable name="Doscribe" value="svt"/>
+    <variable name="script" value="%PROGRAMFILES%\%dossier%\%logiciel%.bat"/>
+
+    <eole dl="http://svt.ac-dijon.fr/IMG/rend2.exe" destname="%Doscribe%\rend2.exe" />
+
+    <check type="file" condition="exists" path="%PROGRAMFILES%\%dossier%\RENDEM2.EXE"/>
+
+    <install cmd="%ComSpec% /C if not exist &quot;%PROGRAMFILES%\dos\SVT&quot; mkdir &quot;%PROGRAMFILES%\dos\SVT&quot;"/>
+    <install cmd="%ComSpec% /C if not exist &quot;%PROGRAMFILES%\dos\SVT\%logiciel%&quot; mkdir &quot;%PROGRAMFILES%\dos\SVT\%logiciel%&quot;"/>
+    <install cmd="%ComSpec% /C copy /Y %PROGRAMFILES%\DOSBOX-0.74\dosconf.conf %PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf"/>
+    <install cmd="%ComSpec% /C copy /Y %PROGRAMFILES%\DOSBOX-0.74\dosconf.conf %PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf"/>
+    <install cmd="%ComSpec% /C copy /Y %SOFTWARE%\%Doscribe%\rend2.exe %PROGRAMFILES%\%dossier%"/>
+
+    <install cmd="%ComSpec% /C echo mount C %PROGRAMFILES%\dos &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf&quot;" />
+    <install cmd="%ComSpec% /C echo C: &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf&quot;"/>
+    <install cmd="%ComSpec% /C echo CD SVT\rendem2 &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf&quot;"/>
+    <install cmd="%ComSpec% /C echo call rend2.exe &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf&quot;" />
+    <install cmd="%ComSpec% /C echo exit &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf&quot;" />
+
+    <install cmd="%ComSpec% /C %PROGRAMFILES%\DOSBox-0.74\dosbox.exe -exit -conf %PROGRAMFILES%\%dossier%\dosconf-inst%logiciel%.conf"/>
+
+    <install cmd="%ComSpec% /C echo mount C %PROGRAMFILES%\dos &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;" />
+    <install cmd="%ComSpec% /C echo C: &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;"/>
+    <install cmd="%ComSpec% /C echo WINDOWS\WIN C:\SVT\rendem2\RENDEM2.EXE &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;" />
+    <install cmd="%ComSpec% /C echo exit &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;" />
+
+    <install cmd="%ComSpec% /C echo @echo Off &gt;&gt; &quot;%script%&quot;" />
+    <install cmd="%ComSpec% /C echo %PROGRAMFILES%\DOSBox-0.74\dosbox.exe -exit -conf %PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf &gt;&gt; &quot;%script%&quot;" />
+    <install cmd="%ComSpec% /C echo exit &gt;&gt; &quot;%script%&quot;" />
+
+    <install cmd="%SOFTWARE%\tools\nircmd.exe shortcut &quot;%SCRIPT%&quot; &quot;%AllUsersPrograms%&quot; &quot;%logiciel%&quot;"/>
+    <install cmd="%ComSpec% /C if exist &quot;%PROGRAMFILES%\%dossier%\rend2.exe&quot; del /q  &quot;%PROGRAMFILES%\%dossier%\rend2.exe&quot;"/>
+
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd="%ComSpec% /C rmdir /S /Q &quot;%PROGRAMFILES%\%dossier%&quot;"/>
+
+</package>
+</packages>

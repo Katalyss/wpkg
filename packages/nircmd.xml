@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+
+
+	<package id="nircmd" name="NirCmd" revision="1" category="Système" priority="0" execute="once">
+		<!--NirCmd is a small command-line utility that allows you to do some useful tasks without displaying any user interface. By running NirCmd with simple command-line option, you can write and delete values and keys in the Registry, write values into INI file, dial to your internet account or connect to a VPN network, restart windows or shut down the computer, create shortcut to a file, change the created/modified date of a file, change your display settings, turn off your monitor, open the door of your CD-ROM drive, and more... -->
+		<variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+		<variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+		<variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1"/>
+		<variable name="logiciel" value="nircmd"/>
+		<variable name="ZIP" value="%logiciel%.zip"/>
+		<variable name="Doscribe" value="tools"/>
+				<depends package-id="7zip"/>
+		<eole dl="http://www.nirsoft.net/utils/nircmd.zip" destname="%Doscribe%\%ZIP%" unzip="1"/>
+		<install cmd="%ComSpec% /C If not exist %Software%\%Doscribe%\%logiciel%.exe %SystemDrive%\PROGRA~1\7-Zip\7z.exe x -o&quot;%SOFTWARE%\%Doscribe%\&quot; -y -bd &quot;%SOFTWARE%\%Doscribe%\%ZIP%&quot; &gt;NUL"/>
+	
+		<check type="file" condition="versiongreaterorequal" path="%Software%\%Doscribe%\%logiciel%.exe" value="2.7.5.222"/>
+		
+		<upgrade include="install"/>
+		<downgrade include="upgrade"/>
+		
+	</package>
+
+</packages>

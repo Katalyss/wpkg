@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="7zip"
+    name="7-Zip"
+    revision="%version%"
+    reboot="false"
+    category="Bureautique"
+    lnk="7-Zip"
+    priority="500">
+            
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="version" value="1514" />
+    <variable name="longversion" value="15.14" />
+    <variable architecture="x86" name="platf" value="" />
+    <variable architecture="x64" name="platf" value="-x64" />
+    
+    <check type="logical" condition="or">
+        <check type="file" condition="versionequalto" path="%PROGRAMFILES%\7-Zip\7zFM.exe" value="%longversion%.0.0" />
+        <check type="file" condition="versionequalto" path="%PROGRAMFILES(x86)%\7-Zip\7zFM.exe" value="%longversion%.0.0" />
+    </check>
+    
+    <eoledl dl="http://www.7-zip.org/a/7z%version%.msi" destname="7zip/7z%version%.msi" />
+    <eoledl dl="http://www.7-zip.org/a/7z%version%-x64.msi" destname="7zip/7z%version%-x64.msi" />
+    
+    <install cmd='msiexec /qn /norestart /i "%SOFTWARE%\7zip\7z%version%%platf%.msi"' />
+
+    <upgrade cmd='msiexec /qn /norestart /i "%SOFTWARE%\7zip\7z%version%%platf%.msi"' />
+
+    <remove cmd='msiexec /qn /x "%SOFTWARE%\7zip\7z%version%%platf%.msi"' />
+</package>
+</packages>

@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="QuicktimeAlternativeLite"
+    name="Quicktime Alternative Lite %version%"
+    revision="%short_version%"
+    reboot="false"
+    priority="10">
+
+    <variable name="version" value="4.1.0" />
+    <variable name="short_version" value="410" />
+    <variable architecture="x86" name="progfiles" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="progfiles" value="%PROGRAMFILES(X86)%" />
+
+    <eoledl dl="http://www.free-codecs.com/download_soft.php?d=6829&amp;s=720" destname="quicktime/QT_Lite_%short_version%.exe" />
+
+    <check type="uninstall" condition="exists" path="QT Lite %version%" />
+    <check type="file" condition="exists" path="%progfiles%\QT Lite\QuickTimePlayer.exe" />
+
+    <!-- Suppression de QuickTime officiel -->
+    <install timeout="300" cmd='MsiExec.exe /qn /x {AF0CE7C0-A3E4-4D73-988B-B29187EC6E9A}'>
+        <exit code='any' />
+    </install>
+    <install timeout="300" cmd='%COMSPEC% /C if exist "C:\PROGRA~1\FICHIE~1\INSTAL~1\Driver\11\INTEL3~1\IDriver.exe" C:\PROGRA~1\FICHIE~1\INSTAL~1\Driver\11\INTEL3~1\IDriver.exe /M{0B69DA57-BC7D-461D-B7D6-2AA9F08869CD} /l1036 /uninst'>
+        <exit code='any' />
+    </install>
+    <install timeout="300" cmd='%COMSPEC% /C if exist "C:\PROGRA~1\FICHIE~1\INSTAL~1\Driver\11\INTEL3~1\IDriver.exe" C:\PROGRA~1\FICHIE~1\INSTAL~1\Driver\11\INTEL3~1\IDriver.exe /M{C21D5524-A970-42FA-AC8A-59B8C7CDCA31} /uninst'>
+        <exit code='any' />
+    </install>
+    <install timeout="300" cmd='%COMSPEC% /C if exist "%PROGRAMFILES%\QuickTime" rmdir /S /Q "%PROGRAMFILES%\QuickTime"' >
+        <exit code='any' />
+    </install>
+    <install timeout="300" cmd='"%SOFTWARE%\quicktime\QT_Lite_%short_version%.exe" /verysilent /noreboot' />
+
+    <upgrade include="remove" />
+    <upgrade include="install" />
+
+    <downgrade include="upgrade" />
+
+    <remove timeout="300" cmd='%COMSPEC% /C FOR /L %F IN (9, -1, 0) DO IF EXIST "%progfiles%\QT Lite\unins00%F.exe" IF EXIST "%progfiles%\QT Lite\unins00%F.dat" ("%progfiles%\QT Lite\unins00%F.exe" /SILENT &amp; ping -n 2 127.0.0.1 > nul &amp; exit)' />
+    <remove timeout="300" cmd='%COMSPEC% /C rmdir /S /Q "%PROGRAMFILES%\QT Lite"' >
+        <exit code='any' />
+    </remove>
+</package>
+</packages>

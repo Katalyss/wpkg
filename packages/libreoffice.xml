@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="libreoffice"
+    name="LibreOffice : La suite bureautique Libre"
+    revision="%version_long%.1"
+    reboot="false"
+    category="Bureautique"
+    lnk="LibreOffice 5"
+    priority="90">
+
+    <!-- Java n'est nécessaire que pour LibreOffice Base, sinon on peut s'en passer
+    <depends package-id="Java" />
+    -->
+
+    <eoledl dl="http://download.documentfoundation.org/libreoffice/stable/%version_long%/win/x86/LibreOffice_%version_long%_Win_x86.msi" destname="libreoffice\LibreOffice_%version_long%_Win_x86.msi" />
+
+    <variable name="version_court" value="5" />
+    <variable name="version" value="%version_court%.0" />
+    <variable name="version_long" value="%version%.6" />
+    <variable name="CNAME" value="Education Nationale" />
+    <variable architecture="x86" name="progfiles" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="progfiles" value="%PROGRAMFILES(X86)%" />
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="logiciel" value="LibreOffice"/>
+    <variable name="INSTALLLOCATION" value="%progfiles%\%logiciel%" />
+    <variable name="Doscribe" value="libreoffice"/>
+    <variable name="MSI" value="%logiciel%_%version_long%_Win_x86.msi"/>
+
+<!-- Programmes supprimés de l'installation complète (ici Base), même principe pour Calc, Impress, Wrt ou Draw -->
+<!-- si vous voulez supprimer un module, vous pouvez mettre (par exemple pour Base) value="gm_p_Base,gm_p_Base_Bin" -->
+    <variable name="REMOVEPROGS" value="gm_p_Base,gm_p_Base_Bin" />
+
+<!-- Options de LibreOffice supprimées de l'installation complète, vous pouvez éventuellement ajouter gm_o_Quickstart (Demarrage rapide), gm_o_Grfflt (import des graphiques), gm_o_Wineexplorerext (apercu fichiers dans explorer) et gm_o_Activexcontrol (affiche dans IE des fichiers) -->
+    <variable name="REMOVEOPTIONS" value="gm_o_Xsltfiltersamples,gm_o_Onlineupdate" />
+
+<!-- Extensions normalement fournies à l'installation supprimées du déploiement, vous pouvez ajouter gm_o_Extensions_MINIMIZER,gm_o_Extensions_MEDIAWIKI -->
+    <variable name="REMOVEEXTENSIONS" value="gm_o_Extensions_NLPSolver" />
+
+<!-- Pack de langues à supprimer à l'installation, on ne gardera que le francais (gm_Langpack_r_fr) et l'anglais (gm_Langpack_r_en_US et gm_Langpack_r_en_GB)-->
+<!-- Vous pouvez rajouter des langues à LibO en enlevant l'espagnol gm_Langpack_r_en_es, l'italien gm_Langpack_r_en_it, l'allemand gm_Langpack_r_en_de, le grec gm_Langpack_r_en_el, le japonais gm_Langpack_r_en_ja, le portugais gm_Langpack_r_en_pt, le chinois simplifié gm_Langpack_r_en_zh_CN ou le breton gm_Langpack_r_en_br -->
+<!-- on coupe en deux la ligne car cela est bloquant pour la creation du allpackages.xml-->
+    <variable name="REMOVELANGAGES" value="gm_Langpack_r_zu,gm_Langpack_r_zh_TW,gm_Langpack_r_xh,gm_Langpack_r_vi,gm_Langpack_r_ve,gm_Langpack_r_uz,gm_Langpack_r_uk,gm_Langpack_r_ug,gm_Langpack_r_ts,gm_Langpack_r_tr,gm_Langpack_r_tn,gm_Langpack_r_th,gm_Langpack_r_tg,gm_Langpack_r_te,gm_Langpack_r_ta,gm_Langpack_r_sw_TZ,gm_Langpack_r_sv,gm_Langpack_r_st,gm_Langpack_r_ss,gm_Langpack_r_sr,gm_Langpack_r_sq,gm_Langpack_r_sl,gm_Langpack_r_sk,gm_Langpack_r_si,gm_Langpack_r_sd,gm_Langpack_r_sat,gm_Langpack_r_sa_IN,gm_Langpack_r_rw,gm_Langpack_r_ro,gm_Langpack_r_pl,gm_Langpack_r_or,gm_Langpack_r_om,gm_Langpack_r_oc,gm_Langpack_r_nso,gm_Langpack_r_nr,gm_Langpack_r_nn,gm_Langpack_r_nl,gm_Langpack_r_ne,gm_Langpack_r_nb,gm_Langpack_r_my,gm_Langpack_r_mr,gm_Langpack_r_mni,gm_Langpack_r_mn,gm_Langpack_r_ml,gm_Langpack_r_mk,gm_Langpack_r_mai" />
+    <variable name="REMOVELANGAGES2" value="gm_Langpack_r_lv,gm_Langpack_r_lt,gm_Langpack_r_lo,gm_Langpack_r_ks,gm_Langpack_r_ko,gm_Langpack_r_kn,gm_Langpack_r_km,gm_Langpack_r_kk,gm_Langpack_r_ka,gm_Langpack_r_ja,gm_Langpack_r_is,gm_Langpack_r_id,gm_Langpack_r_hu,gm_Langpack_r_hr,gm_Langpack_r_hi,gm_Langpack_r_gu,gm_Langpack_r_gl,gm_Langpack_r_gd,gm_Langpack_r_ga,gm_Langpack_r_fi,gm_Langpack_r_fa,gm_Langpack_r_eu,gm_Langpack_r_eo,gm_Langpack_r_en_ZA,gm_Langpack_r_dz,gm_Langpack_r_dgo,gm_Langpack_r_da,gm_Langpack_r_cy,gm_Langpack_r_cs,gm_Langpack_r_ca,gm_Langpack_r_bs,gm_Langpack_r_brx,gm_Langpack_r_bo,gm_Langpack_r_bn,gm_Langpack_r_bg,gm_Langpack_r_be,gm_Langpack_r_ast,gm_Langpack_r_as,gm_Langpack_r_ar,gm_Langpack_r_af,gm_Langpack_r_kok,gm_Langpack_r_br,gm_Langpack_r_es,gm_Langpack_r_pt_BR,gm_Langpack_r_pa_IN,gm_Langpack_r_ru,gm_Langpack_r_et,gm_Langpack_r_de,gm_Langpack_r_el,gm_Langpack_r_he,gm_Langpack_r_it,gm_Langpack_r_zh_CN"/>
+<!-- Dictionnaires que l'on supprime, tous sauf le français et anglais, italien, espagnol et russe. Supprimer gm_r_ex_Dictionary_Es pour supprimer l'Espagnol, gm_r_ex_Dictionary_De (allemand) et gm_r_ex_Dictionary_It (Italien)... -->
+    <variable name="REMOVEDICOS" value="gm_r_ex_Dictionary_Af,gm_r_ex_Dictionary_An,gm_r_ex_Dictionary_Ar,gm_r_ex_Dictionary_Be,gm_r_ex_Dictionary_Bg,gm_r_ex_Dictionary_Bn,gm_r_ex_Dictionary_Br,gm_r_ex_Dictionary_Da,gm_r_ex_Dictionary_Ca,gm_r_ex_Dictionary_El,gm_r_ex_Dictionary_Pt_Pt,gm_r_ex_Dictionary_Si,gm_r_ex_Dictionary_Hi,gm_r_ex_Dictionary_Gu,gm_r_ex_Dictionary_Gd,gm_r_ex_Dictionary_Lt,gm_r_ex_Dictionary_Hr,gm_r_ex_Dictionary_Cs,gm_r_ex_Dictionary_Nl,gm_r_ex_Dictionary_Et,gm_r_ex_Dictionary_De,gm_r_ex_Dictionary_He,gm_r_ex_Dictionary_Hu,gm_r_ex_Dictionary_Lv,gm_r_ex_Dictionary_Ne,gm_r_ex_Dictionary_No,gm_r_ex_Dictionary_Oc,gm_r_ex_Dictionary_Pl,gm_r_ex_Dictionary_Ro,gm_r_ex_Dictionary_Sr,gm_r_ex_Dictionary_Sk,gm_r_ex_Dictionary_Sl,gm_r_ex_Dictionary_Sv,gm_r_ex_Dictionary_Th,gm_r_ex_Dictionary_Uk,gm_r_ex_Dictionary_Vi,gm_r_ex_Dictionary_Zu,gm_r_ex_Dictionary_Gl,gm_r_ex_Dictionary_Te" />
+
+    <check type="uninstall" condition="versiongreaterorequal" path="LibreOffice %version_long%.+" value="%version_long%"/>
+    <check type="file" condition="versiongreaterorequal" path="%INSTALLLOCATION%\program\soffice.exe" value="%version_long%"/>
+
+<!-- on supprime, s'il existe le dossier de la version précédente de LibO -->
+    <install include="remove" />
+    <install cmd='%ComSpec% /C If not exist "%Systemdrive%\netinst\logs" mkdir "%Systemdrive%\netinst\logs"'/>
+    <install cmd='taskkill /f /im firefox.exe /im msiexec.exe /im soffice.* /im unopkg.*'>
+        <exit code="0"/>
+        <exit code="1"/>
+        <exit code="128"/>
+    </install>
+    <install cmd='%ComSpec% /C xcopy /Q /I /E /Y "%SOFTWARE%\%Doscribe%\%MSI%" %SystemDrive%\'/>
+<!-- REGISTER_ALL_MSO_TYPES=1 : les fichiers OFFICE s'ouvriront avec LibO -->
+<!-- REGISTER_NO_MSO_TYPES=1 : les fichiers OFFICE NE s'ouvriront pas avec LibO (Office doit être installé) -->
+
+<!--Attention dans la ligne d'installation suivante, il n'y a pas REGISTER_NO_MSO_TYPES, et c'est REGISTER_ALL_MSO_TYPES=1 qui est choisi-->
+
+    <install timeout='600' cmd='msiexec /qn /I "%SystemDrive%\%MSI%" INSTALLLOCATION="%INSTALLLOCATION%"  /l* %SystemDrive%\netinst\logs\%logiciel%_install_log.txt COMPANYNAME="%CNAME%" USERNAME="" REGISTER_NO_MSO_TYPES=1 ISCHECKFORPRODUCTUPDATE=0 CREATEDESKTOPLINK=0 ADDLOCAL=ALL REMOVE=%REMOVEPROGS%,%REMOVEOPTIONS%,%REMOVEEXTENSIONS%,%REMOVELANGAGES%,%REMOVELANGAGES2%,%REMOVEDICOS%' />
+    <install cmd='%COMSPEC% /c  del /F /Q /S "%SystemDrive%\%MSI%"'/>
+    <install cmd='attrib -S "%AllUsersPrograms%\LibreOffice 4.4"'/>
+
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+<!-- Désinstallation -->
+    <remove cmd="msiexec /qb! /X {CD068533-1A20-47F6-B1A2-196725B1320F}"><exit code="1605"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {0E8E4718-0702-4D33-B007-5E95849BAB3C}"><exit code="1605"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {EF790F1C-CB0C-4B95-8C54-60783F3B6661}"><exit code="1605"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {457EACB3-A764-4C5A-90F3-9BB504723367}"><exit code="1605"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {05653DE1-6567-40C6-B930-39D399B64369}"><exit code="1605"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {F77ED0CD-2E5E-4FC7-82E0-BB7D461E739F}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {FE88323B-9F0E-4596-8F56-37757C6918E9}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {1B9952B5-C212-4945-AD7A-8CE629A0AEB3}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {5B9C9486-4287-4621-8F9D-EC3EE622A82F}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {8D8F47B2-0E03-4C50-9803-A01120878F96}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {5C005E2A-AEAE-4DF7-B7CA-1E6DCDD2AEA4}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X %SOFTWARE%\%Doscribe%\LibreOffice_4.1.5_Win_x86.msi"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {E77773E5-944A-453F-97F3-46767AE0A253}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {8ED4A1FC-56CF-414C-A9AB-A37714AA9EA7}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /X {406EECCC-AF98-4F2C-A99F-FED788F7580C}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd='msiexec /qn /X "%SOFTWARE%\libreoffice\LibreOffice_%version_long%_Win_x86.msi"'>
+    <exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd='%COMSPEC% /C if exist "%progfiles%\%logiciel% 3" rmdir /S /Q "%progfiles%\%logiciel% 3"'/>
+    <remove cmd='%COMSPEC% /C if exist "%progfiles%\%logiciel% 3.3" rmdir /S /Q "%progfiles%\%logiciel% 3.3"'/>
+    <remove cmd='%COMSPEC% /C if exist "%progfiles%\%logiciel% 3.4" rmdir /S /Q "%progfiles%\%logiciel% 3.4"'/>
+    <remove cmd='%COMSPEC% /C if exist "%progfiles%\%logiciel% 3.5" rmdir /S /Q "%progfiles%\%logiciel% 3.5"'/>
+    <remove cmd='%COMSPEC% /C if exist "%progfiles%\%logiciel% 4.0" rmdir /S /Q "%progfiles%\%logiciel% 4.0"'/>
+    <remove cmd='%COMSPEC% /C if exist "%progfiles%\%logiciel% 4.2" rmdir /S /Q "%progfiles%\%logiciel% 4.0"'/>
+    <remove cmd='%COMSPEC% /C if exist "%INSTALLLOCATION%" rmdir /S /Q "%INSTALLLOCATION%"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\%logiciel% 3.4" rmdir /S /Q "%AllUsersPrograms%\%logiciel% 3.4"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\%logiciel% 3.5" rmdir /S /Q "%AllUsersPrograms%\%logiciel% 3.5"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\%logiciel% 4.0" rmdir /S /Q "%AllUsersPrograms%\%logiciel% 4.0"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\%logiciel% 4.2" rmdir /S /Q "%AllUsersPrograms%\%logiciel% 4.2"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\%logiciel% 4.3" rmdir /S /Q "%AllUsersPrograms%\%logiciel% 4.3"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\Bureautique\%logiciel% 3.5" rmdir /S /Q "%AllUsersPrograms%\Bureautique\%logiciel% 3.5"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\Bureautique\%logiciel% 3.4" rmdir /S /Q "%AllUsersPrograms%\Bureautique\%logiciel% 3.4"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\Bureautique\%logiciel% 4.0" rmdir /S /Q "%AllUsersPrograms%\Bureautique\%logiciel% 4.0"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\Bureautique\%logiciel% 4.2" rmdir /S /Q "%AllUsersPrograms%\Bureautique\%logiciel% 4.2"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\Bureautique\%logiciel% 4.3" rmdir /S /Q "%AllUsersPrograms%\Bureautique\%logiciel% 4.3"'/>
+    <remove cmd='%COMSPEC% /C if exist "%AllUsersPrograms%\Bureautique\%logiciel% 4.4" rmdir /S /Q "%AllUsersPrograms%\Bureautique\%logiciel% 4.4"'/>
+
+</package>
+</packages>

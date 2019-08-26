@@ -1,0 +1,158 @@
+--- wpkgscribe.js	Sun Jan 10 17:31:22 2016
++++ wpkg.js	Sun Jan 10 17:13:49 2016
+@@ -7,10 +7,24 @@
+  * Copyright 2005 Aleksander Wysocki <papopypu (at) op . pl><br>
+  * Copyright 2005-2006 Tomasz Chmielewski <mangoo (at) wpkg . org><br>
+  * Copyright 2007-2011 Rainer Meier <r.meier (at) wpkg.org><br>
++ * Copyright 2007 Jean Le Bail <jean.lebail (at) etab . ac-caen . fr>
++ * Copyleft 2012 David Pailler <david.pailler (at) ac-paris . fr>
+  * 
+  * Please report your issues to the list on http://wpkg.org/
+  */
+ 
++ 
++ /*******************************************************************************
++ *  Version de wpkg.js modifiée pour Scribe
++ 
++ * Le support de la remontée des logs d'execution des scripts batch est suspendu suite a des blocages msiexec du wpkg-se3.js adapté en version 1.2 avec la fonction exec() de la version wpkg-se3.js 1.1 de Jean Le Bail.
++ 
++ PATCH pour SCRIBE (David Pailler) largeemnt inspiré de celui  d'Olivier Lacroix pour Sambaedu3
++ Les modifs par rapport à wpkg.js officiels sont délimitées par // PATCH SCRIBE et // FIN PATCH SCRIBE :
++ 1. ajout de lignes dans installPackage() et removePackage() pour classement du menu démarrer
++ 2. modif de la function QueryPackage pour compatibilité avec l'interface se3 actuelle et la lecture des logs d'install 
++ */
++
+ /**
+  * Displays command usage.
+  */
+@@ -668,6 +682,12 @@
+ function main() {
+ 	// Do not open pop-up window while initializing.
+ 	setQuiet(true);
++	
++	// PATCH SCRIBE : oubli dans le script officiel.
++	if (!isNoRunningState()) {
++		setRunningState("true");
++	}
++	// FIN PATCH SCRIBE.
+ 
+ 	// Initialize WPKG internals.
+ 	initialize();
+@@ -5658,6 +5678,25 @@
+ 			// clean downloads
+ 			downloadsClean(downloadNodes);
+ 
++			//  PATCH SCRIBE
++			var packageID = getPackageID(packageNode);
++			//var packageID = packageNode.getAttribute("id");
++			var lnkDir = packageNode.getAttribute("lnk");
++			var category = packageNode.getAttribute("category");
++			if (lnkDir != null) {
++				if (category != null) {
++					info("Deplacement automatique des raccourcis de id=" + packageID + " depuis %AllUsersProfile%\\Menu Démarrer\\Programmes\\" + lnkDir + " dans la Category " + category + ".");
++					exec("%Comspec% /C call %SOFTWARE%\\allpackages.bat >NUL");					
++					exec("%ComSpec% /c call %SOFTWARE%\\AnalyseCategory.bat \"" + packageID + "\" \"" + lnkDir + "\" >> %SystemDrive%\\analysecategory.log" , timeout, workdir);
++			} else {
++					info("Pas de deplacement automatique des raccourcis car 'category' est absent dans " + packageID + ".");
++				}
++			} else {
++				info("Pas de deplacement automatique des raccourcis car 'lnk' est absent dans " + packageID + ".");
++			}
++			log(4,"==============================================================="); // saut ligne entre les paquets à installer
++			// FIN PATCH SCRIBE
++
+ 			// restore old environment
+ 			dinfo("Restoring previous environment.");
+ 			// restore previous environment
+@@ -6243,13 +6282,18 @@
+ 			message += "    Revision:          " + getPackageRevision(packageNode) + "\n";
+ 		}
+ 		
+-		if (packageAction != null) {
+-			message += "    Action:            " + packageAction + "\n";
+-		}
++        // PATCH SCRIBE
++		//if (packageAction != null) {
++		//	message += "    Action:            " + packageAction + "\n";
++		//}
++        // FIN PATCH SCRIBE
+ 
+ 		message += "    Reboot:            " + getPackageReboot(packageNode) + "\n";
+-		message += "    Execute:           " + executeAttribute + "\n";
+-		message += "    Priority:          " + getPackagePriority(packageNode) + "\n";
++        // PATCH SCRIBE
++		//message += "    Execute:           " + executeAttribute + "\n";
++		//message += "    Priority:          " + getPackagePriority(packageNode) + "\n";
++        // FIN PATCH SCRIBE
++        
+ 		if (settingNode != null) {
+ 			message += "    Status:            Installed\n";
+ 		} else {
+@@ -6652,6 +6696,25 @@
+ 						error(errorMessage);
+ 					}
+ 				} finally {
++
++                    // PATCH SCRIBE
++					var packageID = getPackageID(packageNode);
++					//var packageID = packageNode.getAttribute("id");
++					var lnkDir = packageNode.getAttribute("lnk");
++					var category = packageNode.getAttribute("category");
++					if (lnkDir != null) {
++						if (category != null) {
++							info("Suppression des raccourcis de id=" + packageID + " depuis %AllUsersProfile%\\Menu Démarrer\\Programmes\\" + category + "\\" + lnkDir);
++							exec("%Comspec% /C call %SOFTWARE%\\allpackages.bat >NUL");
++							exec("%ComSpec% /C call %SOFTWARE%\\AnalyseCategory.bat \"" + packageID + "\" \"" + lnkDir + "\" remove >> %SystemDrive%\\removecategory.log", timeout, workdir);
++						} else {
++							info("Pas de suppression automatique des raccourcis car 'category' est absent dans " + packageID + ".");
++						}
++					} else {
++						info("Pas de suppression automatique des raccourcis car 'lnk' est absent dans " + packageID + ".");
++					}
++					// FIN PATCH SCRIBE
++
+ 					// restore old environment
+ 					dinfo("Restoring previous environment.");
+ 
+@@ -6720,6 +6783,7 @@
+ 					}
+ 				}
+ 			}
++            log(4,"==============================================================="); // saut ligne entre les paquets à installer
+ 		}
+ 	}
+ 
+@@ -8900,6 +8964,9 @@
+  */
+ function info(message) {
+ 	log(4, message);
++	// PATCH SCRIBE : on a modifié notify pour utiliser les tooltips déployés : on informe l'user de ce que fait wpkg-se3.js
++	//notify(message);
++	// PATCH SCRIBE
+ }
+ 
+ /**
+@@ -9005,7 +9072,9 @@
+  */
+ function notify(message) {
+ 	if (!isNoNotify()) {
+-		var msgPath = "%SystemRoot%\\System32\\msg.exe";
++		// PATCH SCRIBE pour utilisation du msg.exe des tooltips.
++		var msgPath = "%SystemRoot%\\msg.exe";
++		// FIN PATCH
+ 		var netPath = "%SystemRoot%\\System32\\net.exe";
+ 		var cmd = "";
+ 		// check if msg.exe exists
+@@ -9031,8 +9100,10 @@
+ 				error(errorMessage);
+ 			}
+ 		}
+-	} else {
+-		info("User notification suppressed. Message: " + message);
++	// PATCH SCRIBE : saturation dans le cas /nonotify.
++	//} else {
++	//	info("User notification suppressed. Message: " + message);
++	// FIN PATCH SCRIBE
+ 	}
+ }
+ 

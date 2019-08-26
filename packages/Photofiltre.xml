@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Photofiltre"
+    name="Photofiltre - Logiciel de retouches d'images"
+    revision="%version_court%"
+    reboot="false"
+    priority="50">
+
+    <variable name="version_court" value="7" />
+    <variable name="version_avec_point" value="7.1.2" />
+    <variable name="PROGFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+
+<!--
+    <eoledl dl="http://photofiltre.free.fr/utils/pf-setup-fr-%version_court%.exe" destname="photofiltre\pf-setup-fr-%version_court%.exe" />
+    http://static.infomaniak.ch/photofiltre/utils/pf7/pf7-setup-fr.exe
+-->
+    <eoledl dl="http://static.infomaniak.ch/photofiltre/utils/pf7/pf7-setup-fr.exe" destname="photofiltre\pf%version_court%-setup-fr.exe" />
+
+    <check type="file" condition="versionequalto" path="%PROGFILES%\PhotoFiltre 7\PhotoFiltre7.exe" value="%version_avec_point%"/>
+
+    <!-- <install timeout='150' cmd='%SOFTWARE%\photofiltre\pf%version_court%-setup-fr.exe /S _?=%PROGRAMFILES%\PhotoFiltre' /> -->
+    <install timeout='150' cmd='%SOFTWARE%\photofiltre\pf%version_court%-setup-fr.exe /S' />
+
+    <upgrade include='install' />
+    <downgrade include='install' />
+
+    <remove timeout='150' cmd='"%PROGFILES%\PhotoFiltre 7\Uninst.exe" /S' />
+    <remove timeout='150' cmd='%COMSPEC% /C if exist "%PROGRAMFILES%\PhotoFiltre" rmdir /S /Q "%PROGRAMFILES%\PhotoFiltre"'/>
+</package>
+</packages>

@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="DelProf2"
+    name="Efface les profils itinerants restes en local plus de 5 jours"
+    revision="2"
+    reboot="false"
+    priority="200"
+    execute="always" >
+
+    <variable name="InstallLog" value="%SystemDrive%\netinst\logs\delprof2.log" />
+
+    <install cmd='%ComSpec% /c "%SOFTWARE%\DelProf2\DelProf2.exe" /u /i /d:5 >%InstallLog%'/>
+
+    <upgrade include='install' />
+
+    <downgrade include='upgrade' />
+
+</package>
+</packages>

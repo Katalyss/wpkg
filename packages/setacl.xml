@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+ <package id="SetAcl" name="SetAcl" revision="1" category="Système" priority="0" execute="once">
+ <!-- management of Windows permissions (ACLs) and object ownership. From the command line and via COM-->
+  <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86" /> 
+  <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64" /> 
+  <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1" /> 
+  <variable name="logiciel" value="SetACL" /> 
+  <variable name="ZIP" value="%logiciel%.zip" /> 
+  <variable name="Doscribe" value="tools" /> 
+  <depends package-id="7zip" /> 
+  <eole dl="https://helgeklein.com/downloads/SetACL/current/SetACL%20(executable%20version).zip" destname="%Doscribe%\%ZIP%" unzip="1" /> 
+  
+  <install cmd='%ComSpec% /C If not exist %Software%\%Doscribe%\%logiciel% (executable version)\64 bit\%logiciel%.exe %SystemDrive%\PROGRA~1\7-Zip\7z.exe x -o"%SOFTWARE%\%Doscribe%\" -y -bd "%SOFTWARE%\%Doscribe%\%ZIP%" >NUL' /> 
+  <check type="file" condition="versiongreaterorequal" path="%Software%\%Doscribe%\%logiciel% (executable version)\64 bit\%logiciel%.exe" value="3.0.6.0" /> 
+  <upgrade include="install" /> 
+  <downgrade include="upgrade" /> 
+  </package>
+  </packages>

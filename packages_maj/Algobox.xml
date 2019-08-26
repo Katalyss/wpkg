@@ -1,0 +1,31 @@
+<package
+      id="Algobox"
+      name="Algobox : Logiciel d'aide a la creation et a l'execution d'algorithmes"
+      revision="%version%.1"
+      reboot="false"
+      priority="10"> 
+
+ <variable name="version" value="1.0.2" />
+
+	<!-- Téléchargement -->
+  <eoledl dl="https://www.xm1math.net/algobox/assets/files/Algobox_%version%_Win_x64.msi" destname="math/algobox/Algobox_%version%_Win_x64.msi" />
+
+        
+ <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+ <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+ <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+ <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+
+<check type="uninstall" condition="exists" path="Algobox" />
+<check type="file" condition="sizeequals" path="%ProgramFiles%\Algobox\ressources\CHANGELOG.txt" value="14311" />
+      
+<install cmd='"%SOFTWARE%\math\algobox\Algobox_%version%_Win_x64.msi" /S' />
+      
+<upgrade include='install' />
+
+<downgrade include='install' />
+
+<remove cmd='"%PROGRAMFILES%\Algobox\uninstall.exe" /S' />
+<remove cmd='%COMSPEC% /C rmdir /S /Q "%PROGRAMFILES%\Algobox"' />
+
+</package>

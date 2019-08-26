@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="windows311"
+    name="Windows 3.11 sur dosbox"
+    revision="1"
+    priority="80"
+    reboot="false"
+    category="Système">
+    
+    <depends package-id="7zip"/>
+    <depends package-id="dosbox"/>
+    
+    <eoledl dl="https://dev-eole.ac-dijon.fr/attachments/download/1517/dos.zip"  destname="%doscribe%/%ZIP%"/>
+    <!-- windows 3.11 avec les sources est disponible ici: http://1drv.ms/1MXiTse -->
+    
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~2" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\System32\cscript.exe" architecture="x86"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\SysWOW64\cscript.exe" architecture="x64"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="dossier" value="dos"/>
+    <variable name="Doscribe" value="windows"/>
+    <variable name="logiciel" value="regressi"/>
+    <variable name="ZIP" value="%dossier%.zip"/>
+    
+    <check type="file" condition="exists" path="%PROGRAMFILES%\%dossier%\WINDOWS\WIN.COM" />
+    
+    <install cmd="%ComSpec% /C %SystemDrive%\PROGRA~1\7-Zip\7z.exe x -o&quot;%PROGRAMFILES%&quot; -y -bd &quot;%SOFTWARE%\%Doscribe%\%ZIP%&quot; &gt;NUL"/>
+    
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+    
+    <downgrade include="upgrade"/>
+    
+    <remove cmd="%ComSpec% /C rmdir /S /Q &quot;%PROGRAMFILES%\%dossier%&quot;"/>
+
+</package>
+</packages>

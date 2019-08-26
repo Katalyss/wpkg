@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="FlashPlayer"
+    name="Adobe Flash Player (all versions, all platforms)"
+    revision="%version_activex%"
+    reboot="false"
+    priority="1">
+
+    <variable name="major_version" value="32" />
+    <variable name="version_activex" value="32.0.0.238" />
+    <variable name="version_plugin" value="32.0.0.238" />
+    <variable name="shortversion_activex"         value="32.0.0.238" />
+    <variable name="shortversion_plugin"         value="32.0.0.238" />
+    <variable name="PKG_DESTINATION"      value="%SystemRoot%\System32\Macromed\Flash"/>
+    <variable name="PKG_DESTINATION"      value="%SystemRoot%\SysWOW64\Macromed\Flash" architecture="x64"/>
+    <variable name="PKG_DESTINATION_X64"  value="%SystemRoot%\System32\Macromed\Flash"/>
+    <variable name="PKG_FILE_ACTIVEX"     value="Flash32_%shortversion_activex%.ocx" />
+    <variable name="PKG_FILE_PLUGIN"      value="NPSWF32_%shortversion_plugin%.dll" />
+    <variable name="PKG_FILE_ACTIVEX_X64" value="Flash64_%shortversion_activex%.ocx" />
+    <variable name="PKG_FILE_PLUGIN_X64"  value="NPSWF64_%shortversion_plugin%.dll" />
+
+    <eoledl dl="https://get.adobe.com/fr/flashplayer/download/?installer=FP_32_for_Firefox_-_NPAPI&stype=7670&standalone=1"  destname="flash/install_flash_player.exe"  />
+
+    <eoledl dl="http://download.macromedia.com/get/flashplayer/current/support/uninstall_flash_player.exe" destname="flash\uninstall_flash_player.exe" />
+
+    <check type="logical" condition="and" >
+        <check type="uninstall" condition="versiongreaterorequal"      path="Adobe Flash Player .+ ActiveX.*"    value="%version_activex%" />
+        <check type="uninstall" condition="versiongreaterorequal"      path="Adobe Flash Player .+ NPAPI.*"     value="%version_plugin%" />
+    </check>
+    <check type="file" condition="versiongreaterorequal" path="%PKG_DESTINATION%\%PKG_FILE_ACTIVEX%" value="%version_activex%" />
+    <check type="file" condition="versiongreaterorequal" path="%PKG_DESTINATION%\%PKG_FILE_PLUGIN%" value="%version_plugin%" />
+    <check type="file" condition="versiongreaterorequal" path="%PKG_DESTINATION_X64%\%PKG_FILE_ACTIVEX_X64%" value="%version_activex%" architecture="x64" />
+    <check type="file" condition="versiongreaterorequal" path="%PKG_DESTINATION_X64%\%PKG_FILE_PLUGIN_X64%" value="%version_plugin%" architecture="x64" />
+
+    <install include="remove" />
+    <install cmd='"%SOFTWARE%\flash\install_flash_player_%major_version%_active_x-%version_activex%.exe" /install' />
+    <install cmd='"%SOFTWARE%\flash\install_flash_player_%major_version%_plugin-%version_plugin%.exe" /install' />
+
+    <upgrade include="install" />
+
+    <remove timeout="300" cmd='"%SOFTWARE%\flash\uninstall_flash_player.exe" -uninstall' ><exit code="any" /></remove>
+</package>
+</packages>

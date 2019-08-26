@@ -1,0 +1,48 @@
+:: Fichier de configuration de wsusoffline:: Permet de parametrer les mises a jour installees par "true" or "false"
+
+:: Ne pas sauvegarder les fichiers systemes avant la mise a jour
+nobackup=false
+
+:: Installer IE version 7, 8, 9...
+instie7=false
+instie8=false
+instie9=false
+
+:: Mettre a jour Windows Media Player
+updatewmp=true
+
+:: Mettre a jour Terminal Server Client
+updatetsc=true
+
+:: Installer dot.net 3.5 ou 4
+instdotnet35=false
+instdotnet4=false
+
+:: Installer Microsoft Security Essential
+instmsse=false
+
+:: Installer Windows Defender Antimalware Definition Updates
+instwd=false
+
+:: Install Windows PowerShell
+instpsh=false
+
+:: Force l'installation de toutes les mises a jour meme si elles sont deja installees sur le pc de destination
+all=false
+
+:: Installer Office Converter/Compatibility Packs
+instofccnvs=true
+
+:: Verifier l'integrite des fichiers de mise a jour
+:: Necessite que cette integrite ait ete verifiee lors du download
+verify=false
+
+:: ******** IL EST FORTEMENT DECONSEILLE DE MODIFIER LES OPTIONS CI-DESSOUS *************
+:: Redemarrer automatiquement si necessaire 
+autoreboot=false
+
+:: Eteindre le poste a la fin des mises a jour
+shutdown=false
+
+:: DANGEREUX : ne pas mettre a jour Windows Update Agent, Microsoft Installer, Windows Script Host.
+excludestatics=false

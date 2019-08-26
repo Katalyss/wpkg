@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Visionneuse_PowerPoint"
+    name="Visionneuse PowerPoint"
+    revision="2011"
+    priority="1"
+    reboot="false">
+
+    <eoledl dl="http://download.microsoft.com/download/8/1/1/8114e1f9-9d41-4b22-8ffb-801d15d50499/PowerPointViewer.exe" destname="microsoft\PowerPointViewer.exe" />
+    <check type="logical" condition="or">
+        <check type="file" condition="exists" path="%PROGRAMFILES%\Microsoft Office\Office12\PPTVIEW.EXE" />
+        <check type="file" condition="exists" path="%PROGRAMFILES(X86)%\Microsoft Office\Office12\PPTVIEW.EXE" />
+    </check>
+    <check type="uninstall" condition="exists" path="Microsoft Office PowerPoint Viewer 2007.+" />
+
+    <install cmd='"%SOFTWARE%\microsoft\PowerPointViewer.exe" /quiet /passive /norestart' />
+    <downgrade include='install'/>
+    <upgrade include='install'/>
+
+    <remove cmd='msiexec /qn /x {95120000-00AF-040C-0000-0000000FF1CE}' />
+</package>
+</packages>

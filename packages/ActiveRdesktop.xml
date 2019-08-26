@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<packages>
+<package
+    id="activerdesktop"
+    name="Activates Rdesktop"
+    execute="once"
+    priority="100">
+
+    <install cmd='%SOFTWARE%\windows\active_rdesktop.bat' />
+    <upgrade include='install' />
+    <downgrade include='install' />
+
+</package>
+</packages>

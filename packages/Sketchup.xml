@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Sketchup"
+    name="Google SketchUp8"
+    revision="%version%"
+    reboot="false"
+    priority="10">
+
+    <eoledl dl="http://dl.trimble.com/sketchup/SketchUpWFR.exe" destname="google\SketchUpWFR-%version%.exe" />
+    <!-- Il faut extraire le .MSI du .EXE avec 7zip -->
+    
+    <variable name="version" value="8"/>
+
+    <check type="uninstall" condition="exists" path="SketchUp %version%" />
+
+    <install cmd='msiexec /qn /i %SOFTWARE%\google\GoogleSketchUp%version%.msi' />
+    <upgrade include='install' />
+    <downgrade include='install' />
+
+    <remove cmd='msiexec /qn /x %SOFTWARE%\google\sketchup\GoogleSketchUp8.msi' />
+</package>
+</packages>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="Firefox-default"
+    name="Mozilla Firefox par défaut %version%"
+    revision="%version%"
+    reboot="false"
+    priority="30">
+    <variable name="version" value="1" />
+    <variable architecture="x86" name="progfiles" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="progfiles" value="%PROGRAMFILES(X86)%" />
+
+    <install cmd='%COMSPEC% /C IF EXIST "%progfiles%\Mozilla Firefox\uninstall\helper.exe" "%progfiles%\Mozilla Firefox\uninstall\helper.exe" /SetAsDefaultAppGlobal' >
+        <exit code="any" />
+    </install>
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+</package>
+</packages>

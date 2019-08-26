@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="inkscape"
+    name="Inkscape"
+    revision="%version%"
+    reboot="false"
+    priority="5">
+
+    <variable name="version" value="0.91" />
+    <variable architecture="x86" name="platf" value="" />
+    <variable architecture="x64" name="platf" value="-x64" />
+
+    <eoledl dl="https://inkscape.org/en/gallery/item/3950/download/" destname="Inkscape\inkscape-%version%.msi" />
+    <eoledl dl="https://inkscape.org/en/gallery/item/3956/download/" destname="Inkscape\inkscape-%version%-x64.msi" />
+
+    <check type="uninstall" condition="versionequalto" path="Inkscape %version%" value="%version%" />
+    <check type="file" condition="versionequalto" path="%PROGRAMFILES%\Inkscape\inkscape.exe" value="%version%" />
+
+    <install cmd='msiexec /qn /norestart /i "%SOFTWARE%\Inkscape\inkscape-%version%%platf%.msi"' />
+
+    <upgrade include="remove" />
+    <upgrade include="install" />
+
+    <!-- Remove 0.48 EXE installer -->
+    <remove cmd='"%PROGRAMFILES%\Inkscape\uninstall.exe" /S'>
+        <exit code='any' />
+    </remove>
+    <!-- Remove 0.91 x64 MSI -->
+    <remove cmd='msiexec /qn /x{81922150-317E-4BB0-A31D-FF1C14F707C5}'>
+        <exit code='any' />
+    </remove>
+</package>
+</packages>
+

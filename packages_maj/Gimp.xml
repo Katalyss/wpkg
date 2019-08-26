@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="Gimp"
+    name="GNU Image Manipulation Program (GIMP)"
+    revision="%version%"
+    reboot="false"
+    priority="20">
+
+    <variable name="version" value="2.10.12" />
+    <variable name="shortversion" value="2.10" />
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+
+    <check type="uninstall" condition="exists" path="GIMP %version%" />
+    <check type="file" condition="exists" path="%PROGRAMFILES%\GIMP-2.0\bin\gimp-%shortversion%.exe" />
+
+    <eoledl dl="https://download.gimp.org/mirror/pub/gimp/v%shortversion%/windows/gimp-%version%-setup-3.exe" destname="gimp/gimp-%version%-setup-3.exe" />
+
+    <install timeout='400' cmd='"%SOFTWARE%\gimp\gimp-%version%-setup.exe" /VERYSILENT /NORESTART /DIR="%PROGRAMFILES%\GIMP-2.0"' />
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+    <remove timeout="300" cmd='"%PROGRAMFILES%\GIMP-2.0\uninst\unins000.exe" /VERYSILENT /NORESTART' >
+        <exit code="any" />
+    </remove>
+    <remove cmd='%COMSPEC% /c rmdir /s /q "%PROGRAMFILES%\GIMP-2.0"' />
+</package>
+</packages>

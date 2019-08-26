@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="libreoffice-help-pack"
+    name="LibreOffice Help Pack"
+    revision="4.4.7.1"
+    reboot="false"
+    priority="90">
+
+    <depends package-id="libreoffice"/>
+
+    <eoledl dl="http://download.documentfoundation.org/%Doscribe%/stable/%versionlong%/win/x86/%EXE%" destname="%Doscribe%/%EXE%"/>
+
+    <variable architecture="x86" name="progfiles" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="progfiles" value="%PROGRAMFILES(X86)%" />
+    <variable name="logiciel" value="LibreOffice"/>
+    <variable name="INSTALLLOCATION" value="%progfiles%\%logiciel%" />
+    <variable name="Doscribe" value="libreoffice"/>
+    <variable name="version" value="5.0" />
+    <variable name="versionlong" value="5.0.6" />
+    <variable name="EXE" value="%logiciel%_%versionlong%_Win_x86_helppack_fr.msi"/>
+
+    <check type="uninstall" condition="versiongreaterorequal" path="LibreOffice %version% Help Pack (French)" value="%versionlong%"/>
+
+    <install include="remove" />
+    <install cmd='%ComSpec% /C xcopy /Q /I /E /Y "%SOFTWARE%\%Doscribe%\%EXE%" %SystemDrive%\'/>
+    <install cmd='msiexec /qb! /i "%SystemDrive%\%EXE%" INSTALLLOCATION="%INSTALLLOCATION%" ALLUSERS=1'/>
+    <install cmd='%COMSPEC% /c  del /F /Q /S "%SystemDrive%\%EXE%"'/>
+
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd="msiexec /qb! /uninstall {BB21B808-F784-4883-A4D4-B1473384C1C6}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {A74C73B1-BED6-4737-B6FF-74158ABDCC4D}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {1BF5547E-70D8-4619-B033-18BAB17E95A7}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {8A8FFD7E-F670-4B7A-B553-C64A9EDA3CDB}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {87C7BF84-F265-4D1E-978A-6AAD97C47A2F}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {587DB54D-A5D6-40D0-ABA5-C9969F8F245E}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {BB21B808-F784-4883-A4D4-B1473384C1C6}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {226C61DD-87F2-4834-A1F0-A0A76260CCBD}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {3409AF71-99FA-4588-BAD0-EEADA191A533}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd="msiexec /qb! /uninstall {90ED74A4-6804-4E8B-B68D-0DCECBE54CD0}"><exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+    <remove cmd='msiexec /qn /X "%SOFTWARE%\libreoffice\LibreOffice_%versionlong%_Win_x86_helppack_fr.msi"' >
+    <exit code="1605"/><exit code="1603"/><exit code="1619"/>
+    </remove>
+
+</package>
+</packages>

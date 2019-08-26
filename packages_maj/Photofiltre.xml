@@ -1,0 +1,31 @@
+<package
+
+        id="Photofiltre"
+        name="Photofiltre - Logiciel de retouches d'images"
+        revision="%version%.1"
+        reboot="false"
+        priority="50">
+
+        <variable name="version" value="10.14.0" />
+        <variable name="version_court" value="10" />
+  
+        <eoledl dl="http://static.infomaniak.ch/photofiltre/utils/pfsx-setup-fr-%version%.exe" destname="photofiltre/utils/pfsx-setup-fr-%version%.exe" />
+
+    <!-- declaration des variables generales - merci se3 -->
+        <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+        <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+        <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+        <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+
+        <!-- Verifie si le fichier PhotoFiltre%version_court%.exe fait 3 471 872 octets -->       
+    <check type="file" condition="sizeequals" path="%PROGRAMFILES%\PhotoFiltre %version_court%\PhotoFiltre%version_court%.exe" value="3478528" />
+
+    <install cmd='%SOFTWARE%\PhotoFiltre %version_court%\pf%version_court%-setup-fr-%version%.exe /S' />
+
+    <downgrade include="install" />
+
+    <upgrade include="install" />
+
+    <remove cmd='%PROGRAMFILES%\PhotoFiltre %version_court%\Uninst.exe /S' />
+
+    </package>

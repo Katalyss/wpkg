@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<packages>
+<package
+        id="enableremoteregistry"
+        name="Activer l'accès au registre par le réseau"
+        priority="10"
+        execute="once">
+
+	<install cmd='sc config remoteregistry start= auto' >
+            <exit code='any' />
+        </install>
+	<install cmd='net start remoteregistry' >
+            <exit code='any' />
+        </install>
+
+</package>
+</packages>

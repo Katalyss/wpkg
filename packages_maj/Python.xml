@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Python"
+    name="Python - Langage de programmation multi-paradigme"
+    revision="%version%"
+    priority="50"
+    reboot="false">
+    
+    <variable name="version" value="3.7.4" />
+    
+    <check type="uninstall" condition="exists" path="Python %version%" />
+    <check type="file" condition="versiongreaterorequal" path="%progfiles%\Mozilla Firefox\firefox.exe" value="%version%" />
+    
+    <eoledl dl="https://www.python.org/ftp/python/%version%/python-%version%-amd64.exe" destname="python\python-%version%-amd64.exe" />
+    <install architecture="x64" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%-amd64.msi"' />
+    <upgrade architecture="x64" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%-amd64.msi"' />
+    <remove architecture="x64" cmd='msiexec /qn /x "%SOFTWARE%\python\python-%version%-amd64.msi"' />
+
+    <eoledl dl="http://www.python.org/ftp/python/%version%/python-%version%.msi" destname="python\python-%version%.msi" />
+    <install architecture="x86" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%.msi"' />
+    <upgrade architecture="x86" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%.msi"' />
+    <remove architecture="x86" cmd='msiexec /qn /x "%SOFTWARE%\python\python-%version%.msi"' />
+
+</package>
+</packages>

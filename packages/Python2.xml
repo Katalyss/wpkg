@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Python2"
+    name="Python2 - Langage de programmation multi-paradigmei version 2.7.x"
+    revision="%version%"
+    priority="50"
+    reboot="false">
+
+    <variable name="version" value="2.7.11" />
+
+    <check type="uninstall" condition="exists" path="Python %version%.*" />
+
+    <eoledl dl="https://www.python.org/ftp/python/%version%/python-%version%.amd64.msi" destname="python\python-%version%.amd64.msi" />
+    <install architecture="x64" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%.amd64.msi"' />
+    <upgrade architecture="x64" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%.amd64.msi"' />
+    <remove architecture="x64" cmd='msiexec /qn /x "%SOFTWARE%\python\python-%version%.amd64.msi"' />
+
+    <eoledl dl="https://www.python.org/ftp/python/%version%/python-%version%.msi" destname="python\python-%version%.msi" />
+    <install architecture="x86" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%.msi"' />
+    <upgrade architecture="x86" cmd='msiexec /qn /i "%SOFTWARE%\python\python-%version%.msi"' />
+    <remove architecture="x86" cmd='msiexec /qn /x "%SOFTWARE%\python\python-%version%.msi"' />
+
+</package>
+</packages>

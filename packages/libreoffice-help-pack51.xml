@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="libreoffice-help-pack51"
+    name="LibreOffice Help Pack %version%"
+    revision="%versionlong%"
+    reboot="false"
+    priority="4">
+
+    <!-- Telechargement de l'aide -->
+    <eoledl dl="http://download.documentfoundation.org/libreoffice/stable/%versionlong%/win/x86/LibreOffice_%versionlong%_Win_x86_helppack_fr.msi" destname="libreoffice\LibreOffice_%versionlong%_Win_x86_helppack_fr.msi" />
+
+    <!-- declaration des variables utiles pour le XML -->
+    <variable name="version" value="5.1" />
+    <variable name="versionlong" value="5.1.6" />
+    <variable name="versioncourt" value="5" />
+    <variable architecture="x86" name="progfiles" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="progfiles" value="%PROGRAMFILES(X86)%" />
+    <variable name="INSTALLLOCATION" value="%progfiles%\LibreOffice %versioncourt%" />
+
+    <check type="uninstall" condition="exists" path="LibreOffice %version% Help Pack (French)" />
+
+    <install timeout='400' cmd='msiexec /qn /I "%SOFTWARE%\libreoffice\LibreOffice_%versionlong%_Win_x86_helppack_fr.msi" INSTALLLOCATION="%INSTALLLOCATION%"' />
+
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+    <!-- Désinstallation -->
+    <remove cmd='msiexec /qn /X "%SOFTWARE%\libreoffice\LibreOffice_%versionlong%_Win_x86_helppack_fr.msi"' />
+
+</package>
+</packages>

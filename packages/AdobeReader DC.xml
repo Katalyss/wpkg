@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+
+
+<package
+    id="AdobeReader DC"
+    name="Adobe Reader DC - logiciel de lecture PDF"
+    revision="%version%.1"
+    priority="20"
+    reboot="false">
+  
+    <variable name="version" value="1500720033" />
+    <variable name="version_court" value="15.007.20033" />
+    <variable name="locale" value="fr_FR" />
+
+    <variable name="PROGFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+
+    <eoledl dl="ftp://ftp.adobe.com/pub/adobe/reader/win/AcrobatDC/%version%/AcroRdrDC%version%_fr_FR.exe" destname="install_adobe_reader\AdbeRdr%version%.exe" />
+   
+    <check type="uninstall" condition="versiongreaterorequal" path="Adobe Acrobat Reader DC - Français" value="%version_court%" />
+    
+    <!-- Gestion de l'acceptation de la licence en plus -->
+    <install timeout='600' cmd='%SOFTWARE%\install_adobe_reader\AdbeRdr%version%.exe /sAll /rs  /msi /qn /norestart EULA_ACCEPT=YES' >
+            <exit code='0' />
+            <exit code='3010' />
+    </install>
+    
+    <!-- Desactive auto-update -->
+
+    <install cmd='%COMSPEC% /c REG ADD "HKLM\SOFTWARE\Wow6432Node\Adobe\Adobe ARM\1.0\ARM" /v "iCheck" /d "0" /t REG_DWORD /f' architecture="x64"><exit code='any' /></install>
+    <install cmd='%COMSPEC% /c REG ADD "HKLM\SOFTWARE\Adobe\Adobe ARM\1.0\ARM" /v "iCheck" /d "0" /t REG_DWORD /f' architecture="x86"><exit code='any' /></install>
+    <!-- Desactive les processus lances automatiquement -->
+
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Adobe ARM" /f' architecture="x64"><exit code='any' /></install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Reader Speed Launcher" /f' architecture="x64"><exit code='any' /></install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Run" /v "AdobeAAMUpdater-1.0" /f'  architecture="x64"><exit code='any' /></install>
+     <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe ARM" /d "" /f' architecture="x86"><exit code='any' /></install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "Adobe Reader Speed Launcher" /d "" /f' architecture="x86"><exit code='any' /></install>
+    <install cmd='%COMSPEC% /c REG DELETE "HKLM\SOFTWARE\Microsoft\Windows\CurrentVersion\Run" /v "AdobeAAMUpdater-1.0" /d "" /f' architecture="x86"><exit code='any' /></install>
+   <!-- Suppression Icone sur le bureau de tous les utilisateurs -->
+    <install timeout='40' cmd='%COMSPEC% /C if exist "C:\Users\Public\Desktop\Acrobat Reader DC.lnk" del /F /Q "C:\Users\Public\Desktop\Acrobat Reader DC.lnk"' />
+    <!-- Suppression de la bannière de bienvenue au démarrage -->
+    
+    <install cmd='reg.exe import %SOFTWARE%\install_adobe_reader\dcwelcome.reg'/>    
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+
+</package>
+
+
+</packages>

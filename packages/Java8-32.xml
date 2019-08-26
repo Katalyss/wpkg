@@ -1,0 +1,168 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Java8-32"
+    name="Java8-32 bits"
+    revision="%version%.1"
+    reboot="false"
+    priority="60">
+    <variable name="updatever" value="91" />
+    <variable name="majorversion" value="8" />
+    <variable name="version" value="%majorversion%.0.%updatever%" />
+    <variable name="version_court" value="Java %majorversion% Update %updatever%" />
+    <variable name="version_very_court" value="%majorversion%u%updatever%" />
+	<variable name="version_bug3264" value="%majorversion%.0_%updatever%" />
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+
+    <eoledl dl="http://javadl.oracle.com/webapps/download/AutoDL?BundleId=207773" destname="java8-32\jre-%version_very_court%-windows-i586.exe" />
+
+    <check type="uninstall" condition="exists" path="%version_court%" />
+    <install cmd='taskkill /f /im jqs.exe /im iexplore.exe /im firefox.exe'>
+      <exit code='any' />
+    </install>
+
+    <!--- Pour que la désinstallation de certaines versions aboutisse -->
+
+    <install cmd='%COMSPEC% /C copy /Y "%SOFTWARE%\java8-32\installer.dll" "%PROGRAMFILES%\Java\jre7\bin\"'>
+      <exit code='any' />
+    </install>
+
+     <!-- correction bug install java32 sur Windows7/8 64 bits -->
+<install architecture='x64' timeout='100' cmd='%COMSPEC% /c if not exist "%SystemRoot%\syswow64\config\systemprofile\AppData\LocalLow\Oracle\Java\jre1.%version_bug3264%" md "%SystemRoot%\syswow64\config\systemprofile\AppData\LocalLow\Oracle\Java\jre1.%version_bug3264%"' />
+	<install architecture='x64' timeout='100' cmd='%COMSPEC% /c if not exist "%SystemRoot%\system32\config\systemprofile\AppData\LocalLow\Oracle\Java" md "%SystemRoot%\system32\config\systemprofile\AppData\LocalLow\Oracle\Java"' />
+    <install architecture='x64' timeout='100' cmd='%COMSPEC% /c if not exist "%SystemRoot%\system32\config\systemprofile\AppData\LocalLow\Oracle\Java\jre1.%version_bug3264%" mklink /J "%SystemRoot%\system32\config\systemprofile\AppData\LocalLow\Oracle\Java\jre1.%version_bug3264%" "%SystemRoot%\syswow64\config\systemprofile\AppData\LocalLow\Oracle\Java\jre1.%version_bug3264%"' />
+    
+	
+
+<!-- desinstall version precedentes -->
+    <!--Java 6 Update 23-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216023FF}'><exit code='any' /></install>
+    <!--Java 6 Update 24-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216024FF}'><exit code='any' /></install>
+    <!--Java 6 Update 25-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216025FF}'><exit code='any' /></install>
+    <!--Java 6 Update 26-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216026FF}'><exit code='any' /></install>
+    <!--Java 6 Update 27-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216027FF}'><exit code='any' /></install>
+    <!--Java 6 Update 28-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216028FF}'><exit code='any' /></install>
+    <!--Java 6 Update 29-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216029FF}'><exit code='any' /></install>
+    <!--Java 6 Update 30-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216030FF}'><exit code='any' /></install>
+    <!--Java 6 Update 31-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216031FF}'><exit code='any' /></install>
+    <!--Java 6 Update 32-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216032FF}'><exit code='any' /></install>
+    <!--Java 6 Update 33-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216033FF}'><exit code='any' /></install>
+    <!--Java 6 Update 34-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216034FF}'><exit code='any' /></install>
+    <!--Java 6 Update 35-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216035FF}'><exit code='any' /></install>
+    <!--Java 6 Update 36-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216036FF}'><exit code='any' /></install>
+    <!--Java 6 Update 37-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216037FF}'><exit code='any' /></install>
+    <!--Java 6 Update 38-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216038FF}'><exit code='any' /></install>
+    <!--Java 6 Update 39-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216039FF}'><exit code='any' /></install>
+    <!--Java 6 Update 40-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216040FF}'><exit code='any' /></install>
+    <!--Java 6 Update 41-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216041FF}'><exit code='any' /></install>
+    <!--Java 6 Update 42-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216042FF}'><exit code='any' /></install>
+    <!--Java 6 Update 43-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83216043FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 1-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217001FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 2-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217002FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 3-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217003FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 4-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217004FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 5-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217005FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 6-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217006FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 7-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217007FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 8-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217008FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 9-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217009FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 10-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217010FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 11-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217011FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 12-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217012FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 13-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217013FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 14-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217014FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 15-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217015FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 16-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217016FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 17-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217017FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 21-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217021FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 25-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217025FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 40-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217040FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 45-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217045FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 51-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F83217051FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 55-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217055FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 60-->
+    <install timeout='600' cmd='msiexec /qn /norestart /x {26A24AE4-039D-4CA4-87B4-2F83217060FF}'><exit code='any' /></install>
+    <!--Java Java 7 Update 67-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F03217067FF}'><exit code='any' /></install>
+     <!--Java Java 7 Update 71-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F03217071FF}'><exit code='any' /></install>
+     <!--Java Java 7 Update 75-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F03217075FF}'><exit code='any' /></install>
+    <!--Java Java 8 Update 25-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F83218025F0}'><exit code='any' /></install>
+    <!--Java Java 8 Update 31-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F83218031F0}'><exit code='any' /></install>
+    <!--Java Java 8 Update 40-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F83218040F0}'><exit code='any' /></install>
+    <!--Java Java 8 Update 45-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F83218045F0}'><exit code='any' /></install>
+    <!--Java Java 8 Update 51-->
+    <install timeout='600' cmd='MsiExec /qn /norestart /X {26A24AE4-039D-4CA4-87B4-2F83218051F0}'><exit code='any' /></install>
+    <!--Arguments installation pour .exe. Le programme d'installation va lire dans java.settings.cfg les paramètres d'installation d'une installation précédente. Ici on le leurre en y mettant nos propres paramètres -->
+    <install timeout='100' cmd='%comspec% /C  if not exist "C:\ProgramData\Oracle" mkdir "C:\ProgramData\Oracle"' />
+    <install timeout='100' cmd='%comspec% /C  if not exist "C:\ProgramData\Oracle\Java" mkdir "C:\ProgramData\Oracle\Java"' />
+    <install timeout='100' cmd='%comspec% /C  copy /Y "%SOFTWARE%\java8-32\java.settings.cfg" "C:\ProgramData\Oracle\Java\java.settings.cfg"' />
+
+    <!--Installation-->
+    <install timeout='600' cmd='"%SOFTWARE%\java8-32\jre-%version_very_court%-windows-i586.exe" /s' />
+    <install timeout='100' cmd='%COMSPEC% /C regedit.exe /s "%SOFTWARE%\java8-32\javanoupdate32.reg"' />
+    <install timeout='600' cmd='%comspec% /C  if exist "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Java" rd /s /q "C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Java"' />
+
+	<!--Gestion liste des sites autorisés  à exécuter du Java non signé. Java 8 a supprimé le niveau de sécurité Moyen (M), il ne reste plus que High (H) et VeryHigh (VH) qui demandent que le site visité soit au préalable dans le fichier exception.sites pour pouvoir être exécuter-->
+
+    <install timeout='100' cmd='%comspec% /C  if not exist "C:\Windows\Sun\Java\Deployment" mkdir "C:\Windows\Sun\Java\Deployment"' />
+    <install timeout='100' cmd='%comspec% /C  copy /Y "%SOFTWARE%\java8-32\deployment.config" "C:\Windows\Sun\Java\Deployment\deployment.config"' />
+    <install timeout='100' cmd='%comspec% /C  copy /Y "%SOFTWARE%\java8-32\deployment.properties" "C:\Windows\Sun\Java\Deployment\deployment.properties"' />
+    <install timeout='100' cmd='%comspec% /C  copy /Y "%SOFTWARE%\java8-32\exception.sites" "C:\Windows\Sun\Java\Deployment\exception.sites"' />
+
+	<downgrade include="install" />
+    <upgrade include="install" />
+<!--
+    <remove cmd='msiexec /qn /x {26A24AE4-039D-4CA4-87B4-2F83217540FF}' />
+-->
+</package>
+</packages>

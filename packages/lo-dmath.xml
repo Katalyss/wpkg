@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="lo-dmath"
+    name="DmathLOo"
+    revision="3.5.9.0"
+    reboot="false"
+    priority="10">
+
+    <depends package-id="libreoffice"/>
+    <depends package-id="7zip"/>
+
+    <variable name="PROGRA86" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRA86" value="%ProgramFiles(x86)%" architecture="x64"/>
+    <variable name="extension" value="Dmaths"/>
+    <variable name="OXT" value="DmathsAddon.oxt"/>
+    <variable name="dossier_libreoffice" value="LibreOffice"/>
+
+    <eoledl dl="http://download.tuxfamily.org/dmaths/ClubDmaths/DmathsAddon.oxt" destname="libreoffice/DmathsAddon.oxt"/>
+
+    <check type="logical" condition="and">
+        <check type="file" condition="exists" path="%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\luDmaths.tmp"/>
+        <check type="file" condition="exists" path="%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\luDmaths.tmp_\DmathsAddon.oxt\Dmaths\Angle.xdl"/>
+    </check>
+
+    <install cmd="%ComSpec% /C If Not Exist &quot;%PROGRA86%\%dossier_libreoffice%\program\unopkg.com&quot; exit 1"/>
+    <install cmd="%ComSpec% /C TASKKILL /F /IM soffice.* || exit 0"/>
+    <install cmd="%ComSpec% /C TASKKILL /F /IM unopkg.* || exit 0"/>
+    <install cmd="%ComSpec% /C xcopy /Q /I /E /Y %SOFTWARE%\libreoffice\%OXT% %TMP%"/>
+    <install cmd="%ComSpec% /C If Exist &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp_&quot; rmdir /S /Q &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp_&quot;"/>
+    <install cmd="%ComSpec% /C C:\PROGRA~1\7-Zip\7z.exe x -o&quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp_\%OXT%&quot; -y -bd %TMP%\%OXT% &gt;NUL"/>
+    <install cmd="%ComSpec% /C echo. &gt; &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp&quot;"/>
+    <install cmd="%ComSpec% /C If Exist &quot;%TMP%\%OXT%&quot; del /F /Q &quot;%TMP%\%OXT%&quot;"/>
+    <install cmd="%ComSpec% /C TASKKILL /F /IM unopkg.* || exit 0"/>
+    <install cmd="%ComSpec% /C If Exist &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmpremoved&quot; del /F /Q &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmpremoved&quot;"/>
+    <install cmd="%ComSpec% /C if exist &quot;%SystemDrive%\netinst\lo%extension%remove.log&quot; del /F /Q &quot;%SystemDrive%\netinst\lo%extension%remove.log"/>
+    <install cmd='%ComSpec% /C %PROGRA86%\%dossier_libreoffice%\program\swriter.exe' timeout="100"><exit code="any"/>
+    </install>
+    <install cmd='taskkill /f /im swriter.exe /im msiexec.exe /im soffice.* /im unopkg.*'>
+        <exit code="0"/>
+        <exit code="1"/>
+        <exit code="128"/>
+    </install>
+    <install cmd='%ComSpec% /C %PROGRA86%\%dossier_libreoffice%\program\swriter.exe' timeout="60"><exit code="any"/>
+    </install>
+    <install cmd='taskkill /f /im swriter.exe /im msiexec.exe /im soffice.* /im unopkg.*'>
+        <exit code="0"/>
+        <exit code="1"/>
+        <exit code="128"/>
+    </install>
+
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd="%ComSpec% /C TASKKILL /F /IM soffice.* || exit 0"/>
+    <remove cmd="%ComSpec% /C TASKKILL /F /IM unopkg.* || exit 0"/>
+    <remove cmd="%ComSpec% /C &quot;%PROGRA86%\%dossier_libreoffice%\program\unopkg&quot; list --shared %extension% || exit 0"/>
+    <remove cmd="%ComSpec% /C &quot;%PROGRA86%\%dossier_libreoffice%\program\unopkg&quot; remove --shared %extension% --log-file %SystemDrive%\netinst\lo%extension%remove.log"><exit code="1"/>
+    </remove>
+    <remove cmd="%ComSpec% /C &quot;%PROGRA86%\%dossier_libreoffice%\program\unopkg&quot; list"><exit code="1"/>
+    </remove>
+    <remove cmd="%ComSpec% /C If Exist &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp_&quot; rmdir /S /Q &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp_&quot;"/>
+    <remove cmd="%ComSpec% /C if exist &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp&quot; del /F /Q &quot;%PROGRA86%\%dossier_libreoffice%\share\uno_packages\cache\uno_packages\lu%extension%.tmp&quot;"/>
+    <remove cmd="%ComSpec% /C if exist &quot;%SystemDrive%\netinst\lo%extension%.log&quot; del /F /Q &quot;%SystemDrive%\netinst\lo%extension%.log&quot;"/>
+    <remove cmd="%ComSpec% /C if exist &quot;%SystemDrive%\netinst\lo%extension%.txt&quot; del /F /Q &quot;%SystemDrive%\netinst\lo%extension%.txt&quot;"/>
+
+</package>
+</packages>

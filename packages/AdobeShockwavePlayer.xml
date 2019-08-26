@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+
+
+﻿
+﻿
+<package
+    id="AdobeShockwavePlayer"
+    name="Adobe Shockwave Player"
+    revision="%version%.1"
+    priority="14">
+    <variable name="version" value="12.1.7.157" />
+    <variable name="version_court" value="12.1" />
+    
+    <eoledl dl="http://www.adobe.com/go/sw_full_exe_installer" destname="Standard\Install_macromedia_plugins\sw_lic_full_installer.exe" />
+    <check type="logical" condition="and">
+      <check type="uninstall" condition="exists" path="Adobe Shockwave Player %version_court%" />
+      <check type="uninstall" condition="versiongreaterorequal" path="Adobe Shockwave Player %version_court%" value="%version%" />
+    </check>
+    <install cmd='%SOFTWARE%\Standard\Install_macromedia_plugins\sw_lic_full_installer.exe /S' />
+    
+<!--     
+    <upgrade include="remove" />-->
+    <upgrade cmd='%SOFTWARE%\Standard\Install_macromedia_plugins\sw_lic_full_installer.exe /S' />
+
+</package>
+
+
+</packages>

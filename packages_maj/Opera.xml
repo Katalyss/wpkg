@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package id="opera"
+    name="Opera"
+    revision="%PKG_VERSION%"
+    reboot="false"
+    priority="30">
+
+    <!--    Download: http://ftp.opera.com/pub/opera/win/
+    silent Switches: http://my.opera.com/community/forums/topic.dml?id=841872&t=1336989009&page=1#comment8139732
+    -->
+
+    <variable name="PKG_VERSION" value="63.0.3368.43" />
+    <variable name="PKG_EXEVERSION" value="63.0.3368.43" />
+    <variable name="PKG_SOURCE"           value="%SOFTWARE%\Opera" />
+    <variable name="PKG_DESTINATION" value="%PROGRAMFILES%\Opera" architecture="x86" />
+    <variable name="PKG_DESTINATION" value="%PROGRAMFILES(x86)%\Opera" architecture="x64" />
+    <variable name="PKG_DESTINATION64" value="%PROGRAMFILES%\Opera x64" />
+
+    <eoledl dl="https://www.opera.com/computer/thanks?ni=stable&os=windows" destname="opera/OperaSetup.exe" />
+
+    <check type="uninstall" condition="versiongreaterorequal" path="Opera .+" value="%PKG_VERSION%" />
+    <check type="file" condition="versiongreaterorequal" path="%PKG_DESTINATION%\launcher.exe" value="%PKG_VERSION%" />
+
+    <install cmd='taskkill /F /IM opera.exe'>
+        <exit code='any' />
+    </install>
+    <install include='remove' />
+    <install timeout='150'
+        cmd='%PKG_SOURCE%\Opera_%PKG_EXEVERSION%_Setup.exe /silent 1 /pintotaskbar 0 /launchopera 0 /startmenushortcut 0 /desktopshortcut 0 /quicklaunchshortcut 0 /setdefaultbrowser 0'>
+        <exit code='0' />
+    </install>
+
+    <downgrade include='remove' />
+    <downgrade include='install' />
+
+    <upgrade include='remove' />
+    <upgrade include='install' />
+
+    <remove cmd='taskkill /f /im jqs.exe /im iexplore.exe /im firefox.exe /im opera.exe'>
+        <exit code='any' />
+    </remove>
+    <!-- 32 bit Opera on 32 and 64 bit Systems -->
+    <remove timeout='150'
+        cmd='cmd /c IF EXIST "%PKG_DESTINATION%\launcher.exe" "%PKG_DESTINATION%\launcher.exe" /uninstall /silent' >
+        <exit code='any' />
+    </remove>
+     <!-- remove old versions -->
+    <remove timeout='150'
+        cmd='cmd /c IF EXIST "%PKG_DESTINATION%\Opera.exe" IF EXIST "%PKG_DESTINATION%\opera_install_log.xml" cmd /c "%PKG_DESTINATION%\Opera.exe" /uninstall /silent' >
+        <exit code='any' />
+    </remove>
+    <!-- remove 64 bit Opera on 64 bit System -->
+    <remove architecture="x64" timeout='150'
+        cmd='cmd /c IF EXIST "%PKG_DESTINATION64%\Opera.exe"  IF EXIST "%PKG_DESTINATION64%\opera_install_log.xml" cmd /c "%PKG_DESTINATION64%\Opera.exe" /uninstall /silent' >
+        <exit code='any' />
+    </remove>
+    <!-- remove REG all architectures -->
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_1" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_2" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_3" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_4" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_5" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_6" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_7" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_8" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_9" /F' >
+        <exit code='any' />
+    </remove>
+    <remove timeout='150'
+        cmd='reg delete "HKLM\Software\Microsoft\Windows\CurrentVersion\Uninstall\Opera 12.16.1860_10" /F' >
+        <exit code='any' />
+    </remove>
+
+</package>
+</packages>

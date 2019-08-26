@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="anagene2"
+    name="anagene v2.1.0.34"
+    revision="2.1.0.34"
+    reboot="false"
+    category="SVT"
+    lnk="Anagène 2"
+    priority="20">
+
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~2" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+
+<!--<variable name="setacl" value="%SOFTWARE%\tools\SetACL (executable version)\32 bit\SetACL.exe" architecture="x86"/>
+    <variable name="setacl" value="%SOFTWARE%\tools\SetACL (executable version)\64 bit\SetACL.exe" architecture="x64"/>-->
+
+    <variable name="setacl" value="%SOFTWARE%\tools\setacl\x86\SetACL.exe" architecture="x86"/>
+    <variable name="setacl" value="%SOFTWARE%\tools\setacl\x64\SetACL.exe" architecture="x64"/>
+    <variable name="Doscribe" value="anagene2"/>
+    <variable name="ZIP" value="Anagene2Plus_maj_2014.zip"/>
+    <variable name="dossier" value="Anagene2"/>
+
+    <install cmd="%ComSpec% /C xcopy &quot;%SOFTWARE%\%Doscribe%\Common\Microsoft Shared\DAO\*.*&quot; &quot;%PROGRAMFILES%\Fichiers communs\Microsoft Shared\DAO&quot; /I /V /F /H /R /Y &gt;NULL"><exit code="4"/>
+    </install>
+    <install cmd="%ComSpec% /C xcopy &quot;%SOFTWARE%\%Doscribe%\Common\Microsoft Shared\DAO\*.*&quot; &quot;%PROGRAMFILES%\Common Files\Microsoft Shared\DAO&quot; /I /V /F /H /R /Y &gt;NULL"><exit code="4"/>
+    </install>
+    <install cmd='taskkill /f /im jqs.exe /im msiexec.exe'><exit code='any' /></install>
+    <install cmd="MsiExec.exe  /I &quot;%SOFTWARE%\%Doscribe%\Anagene 2.msi&quot;  /passive ALLUSERS=1"/>
+    <install cmd="%ComSpec% /C xcopy /Q /I /E /Y %SOFTWARE%\%Doscribe%\%ZIP% %TMP%"/>
+    <install cmd="%ComSpec% /C %SystemDrive%\PROGRA~1\7-Zip\7z.exe x -o&quot;%PROGRAMFILES%\Anagene2&quot; -y -bd &quot;%TMP%\%ZIP%&quot; &gt;NUL"/>
+
+<!--<install cmd="%ComSpec% /C &quot;%setacl%&quot; -on &quot;%PROGRAMFILES%\Anagene2&quot; -ot file -actn ace -ace &quot;n:Utilisateurs;p:add_file,add_subdir,write;m:grant&quot;"/>-->
+
+    <install cmd="%ComSpec% /C CACLS.EXE &quot;%PROGRAMFILES%\%dossier%&quot; /E /G BUILTIN\Utilisateurs:C &gt;NUL" timeout="120" />
+    <install cmd="%ComSpec% /c if not exist &quot;%SystemDrive%\Temp&quot; mkdir &quot;%SystemDrive%\Temp&quot;"/>
+    <install cmd="%ComSpec% /C CACLS.EXE &quot;C:\Temp&quot; /E /G BUILTIN\Utilisateurs:C &gt;NUL" timeout="120" />
+<!--<install cmd="%ComSpec% /C &quot;%setacl%&quot; -on &quot;C:\Temp&quot; -ot file -actn ace -ace &quot;n:Utilisateurs;p:add_file,add_subdir,write;m:grant&quot;"/>-->
+
+    <check type="file" condition="versiongreaterorequal" path="%PROGRAMFILES%\Anagene2\anagene2.exe" value="2.1.0.34"/>
+
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd="msiexec.exe /X{6E83FF05-B414-4AA8-A782-927CB7D516EC} /qn"><exit code="1605"/>
+    </remove>
+    <remove cmd="%ComSpec% /C if exist &quot;%PROGRAMFILES%\Anagene2&quot; rd /S /Q &quot;%PROGRAMFILES%\Anagene2&quot;"/>
+</package>
+</packages>

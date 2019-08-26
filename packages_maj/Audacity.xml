@@ -1,0 +1,35 @@
+<package
+    id="Audacity"
+    name="Audacity (+lame) - Logiciel d'enregistrement et de montage audio"
+    revision="%version%.1"
+    priority="30"
+    reboot="false">
+
+    <variable name="version" value="2.3.2"/>
+
+<eoledl dl='https://www.fosshub.com/Audacity.html?dwl=audacity-win-%version%.exe' destname='audacity\audacity-win-%version%.exe'/>
+<!-- Télécharger le zip suivant et décompresser dans le dossier %SOFTWARE%\audacity -->
+<!-- refaire le profil obligatoire pour parametrer la bibliotheque Lame Mp3 -->
+<eoledl dl='http://mesip.ac-lyon.fr/divers/lame_enc.dll' destname='audacity\lame_enc.dll'/>
+
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+
+<check type="logical" condition="and">
+    <check type="uninstall" condition="exists" path="Audacity %version%"/>
+    <check type="file" condition="exists" path="%PROGRAMFILES%\Audacity\Plug-Ins\lame_enc.dll"/>
+</check>
+
+<install cmd='%SOFTWARE%\audacity\audacity-win-%version%.exe /sp- /verysilent /norestart'/>
+<install cmd='%ComSpec% /C XCOPY "%SOFTWARE%\audacity\*.dll" "%PROGRAMFILES%\Audacity\Plug-Ins\" /S /E /Y /Q /R'/>
+
+<upgrade include='install'/>
+
+<downgrade include='install'/>
+
+<remove cmd='"%PROGRAMFILES%\Audacity\unins000.exe" /verysilent'/>
+<remove cmd='%COMSPEC% /C rmdir /S /Q "%PROGRAMFILES%\Audacity"'/>
+
+</package>

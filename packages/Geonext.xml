@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="Geonext"
+    name="GeoNExT Logiciel de Geométrie Dynamique"
+    revision="%version%"
+    reboot="false"
+    priority="100">
+
+    <!-- <depends package-id="Java" /> -->
+
+    <variable name="version" value="1.74"/>
+
+    <!-- dl=http://www.tdmaths.com/tdgeometrie/geonextSetup.exe -->
+    <eoledl  dl="http://geonext.uni-bayreuth.de/data/download/geonext_win.exe" destname="math\geonext\geonext_win-%version%.exe" />
+    <!-- les raccourcis se trouvent dans %SOFTWARE%\math\geonext\Raccourcis GEONExT\ -->
+
+    <check type="uninstall" condition="exists" path="GEONExT %version%" />
+
+    <install cmd='"%SOFTWARE%\math\geonext\geonext_win-%version%.exe" /SILENT' />
+
+    <upgrade cmd='"%SOFTWARE%\math\geonext\geonext_win-%version%.exe" /SILENT' />
+
+    <remove cmd='"%PROGRAMFILES%\GEONExT\uninst.exe" /SILENT' />
+
+</package>
+</packages>

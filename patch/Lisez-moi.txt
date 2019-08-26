@@ -1,0 +1,52 @@
+Classement automatique des raccourcis dans le menu démarrer et personnalisation
+
+Ceci est une adaptation pour scribe du système mis en place sous sambaedu3 pour wpkg:
+http://wwdeb.crdp.ac-caen.fr/mediase3/index.php/Le_module_D%C3%A9ploiement_d'applications_avec_wpkg
+http://wwdeb.crdp.ac-caen.fr/mediase3/index.php/FaqWpkg#Contraintes_que_doit_respecter_un_xml_officiel
+
+
+Le but des modifications proposées est de déposer systématiquement et automatiquement
+des raccourcis des programmes dans le dossier programmes commun à tous les utilisateurs
+et les ranger par catégorie.
+
+Pour cela, le patch proposé fait référence à:
+1)deux paramètres supplémentaires dans l'en-tête d'un paquet xml:
+
+a) category dont les valeurs peuvent-être 
+Mathématiques (priorité 10)
+SVT (priorité 20)
+Sciences Physiques  (priorité 30)
+Graphismes  (priorité 40)
+Bureautique  (priorité 90)
+Multimédia  (priorité 80)
+Internet  (priorité 70)
+Technologie-SI  (priorité 60)
+Informatique  (priorité 85)
+Anglais (priorité 50) etc ..
+
+b) lnk : qui est le nom du raccourcis du programme à déplacer du dossier commun.
+C'est soit un dossier , soit un lien : par exemple Lilimath.lnk
+
+2) fait référence aux exécutables qui vont faire le travail: allpackages.bat et AnalyseCategory.js AnalyseCategory.bat et AnalyseCategory.xls
+(voir Lisez-moi.txt dans Softwares\AnalyseCategory
+
+Installation:
+1) lancer patchpourwpkgjs.bat
+
+2) Régler dans Esu pour chaque parc:
+
+Dossier "Programmes" de tous les utilisateurs:
+-Pour les postes XP
+C:\Documents and Settings\All Users\Menu Démarrer\Programmes
+-Pour les postes vista et ultérieurs:
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs
+
+Éventuellement si une des applications comme Workspace utilise un lanceur au démarrage:
+
+Dossier "Démarrage" de tous les utilisateurs:
+-Pour les postes XP
+C:\Documents and Settings\All Users\Menu Démarrer\Programmes\Démarrage
+-Pour les postes vista et ultérieurs:
+C:\ProgramData\Microsoft\Windows\Start Menu\Programs\Startup
+
+David Pailler

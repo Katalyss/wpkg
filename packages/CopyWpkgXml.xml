@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+    <package
+    id="CopyWpkgXml"
+    name="CopyWpkgXml"
+    revision="2"
+    reboot="false"
+    priority="0"
+    execute="always">
+
+    <!--Package à utiliser avec wpkgCreateReport
+    installeur : http://dev-eole.ac-dijon.fr/attachments/download/801/wpkg-rapport.sh
+    site : http://www.gig-mbh.de/edv/index.htm > Software > Wpkg Tools
+    -->
+    <install cmd='%COMSPEC% /C copy /Y "%WINDIR%\System32\wpkg.xml" "%SOFTWARE%\.EtatsClients\%COMPUTERNAME%.xml"' />
+
+</package>
+
+</packages>

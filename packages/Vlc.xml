@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package id="Vlc"
+    name="VideoLAN Client"
+    revision="%version%"
+    priority="50"
+    reboot="false">
+    <variable architecture="x86" name="progfiles" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="progfiles" value="%PROGRAMFILES(X86)%" />
+    <variable name="version" value="2.2.4" />
+
+    <eoledl dl="http://get.videolan.org/vlc/%version%/win32/vlc-%version%-win32.exe" destname="vlc/vlc-%version%-win32.exe" />
+
+    <check type="uninstall" condition="versionequalto" path="VLC media player*" value="%version%"/>
+    <check type="file" condition="exists" path="%progfiles%\VideoLAN\VLC\vlc.exe" />
+
+    <install timeout='150' cmd='%COMSPEC% /c if exist "%progfiles%\VideoLAN\VLC\uninstall.exe" "%progfiles%\VideoLAN\VLC\uninstall.exe" /S _?=%progfiles%\VideoLAN\VLC'/>
+    <install timeout='150' cmd='%COMSPEC% /C if exist "%progfiles%\VideoLAN\VLC" rmdir /S /Q "%progfiles%\VideoLAN"'/>
+    <install timeout='150' cmd='%COMSPEC% /C start /wait "VLC" "%SOFTWARE%\vlc\vlc-%version%-win32.exe" /S /NCRC /D="%progfiles%"'/>
+
+    <downgrade include="install" />
+    <upgrade include="install" />
+
+    <remove cmd='%progfiles%\VideoLAN\VLC\uninstall.exe /S _?=%progfiles%\VideoLAN\VLC'>
+        <exit code="any" />
+    </remove>
+    <remove cmd='%COMSPEC% /C rmdir /S /Q "%progfiles%\VideoLAN"'>
+        <exit code="any" />
+    </remove>
+</package>
+</packages>

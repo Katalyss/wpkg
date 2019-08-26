@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Scratch" 
+    name="Scratch - logiciel de programmation ludique pour jeunes" 
+    revision="%version_long%.0"
+    reboot="false"
+    category="Mathématiques"
+    lnk="%logiciel%.lnk"
+    priority="10">
+    
+    <depends package-id="nircmd"/>    
+    <depends package-id="AdobeAir"/>
+
+    <eoledl dl="https://scratch.mit.edu/scratchr2/static/sa/Scratch-442.exe" destname="Scratch\Scratch-442.exe" />
+
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x86"/>
+    <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x64"/>
+    <variable name="version" value="2" />
+    <variable name="version_long" value="%version%.55"/>
+    <variable name="old_version" value="1.4" />
+    
+    <variable name="doscribe" value="Scratch" />
+    <variable name="logiciel" value="%doscribe% %version%" />
+    <variable name="dossier" value="%logiciel%" />
+    <variable name="EXE" value="%doscribe%-442.exe" />
+    
+    <check type="uninstall" condition="versiongreaterorequal" path="Scratch %version% Offline Editor" value="%version_long%"/>
+
+    <install timeout='300' cmd='"%SOFTWARE%\%Doscribe%\%EXE%" -silent' />
+    <install cmd='%SOFTWARE%\tools\nircmd.exe shortcut "%ProgramFiles%\%dossier%\%logiciel%.exe" "~$folder.common_programs$" "%logiciel%"' />  
+    <upgrade include='remove' />
+    <upgrade include='install' />
+    <downgrade include='install' />
+
+    <remove timeout='300' cmd='%ComSpec% /C if exist "%SOFTWARE%\Scratch\Scratch%old_version%.msi" msiexec /x "%SOFTWARE%\Scratch\Scratch%old_version%.msi" /qn' />
+    <remove cmd="MsiExec.exe  /qn /norestart /X{E9372CBF-6D64-482C-BFB1-48968D6621D4}">
+    <exit code="1605"/>
+    </remove>
+    <remove cmd="MsiExec.exe  /qn /norestart /X{DCEB8C84-8C31-0B01-CA35-3FD484C953E9}">
+    <exit code="1605"/>
+    </remove>
+</package>
+</packages>

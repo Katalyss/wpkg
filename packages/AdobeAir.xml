@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="AdobeAir"
+    name="Adobe AIR"
+    revision="%version%.0.0"
+    priority="101"
+    category="Système">
+            
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="Doscribe" value="adobeair"/>
+    <variable name="version" value="20.0"/>
+    <variable name="version_long" value="%version%.0.233"/>
+    <variable name="CommonFiles" value="%PROGRAMFILES%\Fichiers communs" architecture="x86"/>
+    <variable name="CommonFiles" value="%PROGRAMFILES%\Common Files" architecture="x64"/>
+
+    <eole dl="http://airdownload.adobe.com/air/win/download/%version%/AdobeAIRInstaller.exe" destname="%Doscribe%\AdobeAIRInstaller.exe"/>
+
+    <check type="file" condition="versiongreaterorequal" path="%CommonFiles%\Adobe AIR\Versions\1.0\Adobe AIR.dll" value="%version_long%"/>
+
+    <install cmd="%SOFTWARE%\adobeair\AdobeAIRInstaller.exe -silent"/>
+    <install cmd='%COMSPEC% /c REG ADD "HKLM\SOFTWARE\Policies\Adobe\AIR" /v "UpdateDisabled" /d "1" /t REG_DWORD /f' /> 
+
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd='taskkill /f /im jqs.exe /im msiexec.exe'><exit code='any' /></remove>
+    <remove cmd="MsiExec.exe  /qn /norestart /X{7B77622E-DE90-48EA-B2C7-227B1DE58A01}"><exit code="1605"/>
+    </remove>
+    <remove cmd="%SOFTWARE%\adobeair\AdobeAIRInstaller.exe -uninstall">
+        <exit code="7"/>
+    </remove>
+
+</package>
+</packages>

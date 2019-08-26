@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="Scribus"
+    name="Scribus : Logiciel libre de PAO"
+    revision="%version%"
+    reboot="false"
+    priority="50">
+
+    <depends package-id="GPLGhostScript"/>
+
+    <variable name="version" value="1.4.5" />
+	<variable architecture="x86" name="platf" value="" />
+	<variable architecture="x64" name="platf" value="-x64" />
+
+    <eoledl dl="http://sourceforge.net/projects/scribus/files/scribus/%version%/scribus-%version%-windows.exe/download" destname="scribus/scribus-%version%-windows.exe" />
+    <eoledl dl="http://sourceforge.net/projects/scribus/files/scribus/%version%/scribus-%version%-windows-x64.exe/download" destname="scribus/scribus-%version%-windows-x64.exe" />
+
+    <check type="file" condition="exists" path="%PROGRAMFILES%\Scribus\Scribus.exe" />
+    <check type="uninstall" condition="exists" path="Scribus %version%.*" />
+
+    <install cmd='%COMSPEC% /c if exist "%PROGRAMFILES%\Scribus\uninst.exe" "%PROGRAMFILES%\Scribus\uninst.exe" /S'/>
+    <install cmd="%SOFTWARE%\scribus\scribus-%version%-windows%platf%.exe /S /D=%PROGRAMFILES%\Scribus" />
+
+    <upgrade include="install" />
+    <downgrade include="install" />
+
+    <remove cmd='"%PROGRAMFILES%\Scribus\uninst.exe" /S' />
+    <remove  cmd="%COMSPEC% /c ping -n 10 127.0.0.1 > nul" />
+</package>
+</packages>

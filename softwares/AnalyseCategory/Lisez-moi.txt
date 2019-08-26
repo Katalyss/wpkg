@@ -1,0 +1,59 @@
+Classement automatique des raccourcis dans le menu démarrer et personnalisation
+
+Ceci est une adaptation pour scribe du système mis en place sous sambaedu3 pour wpkg:
+http://wwdeb.crdp.ac-caen.fr/mediase3/index.php/Le_module_D%C3%A9ploiement_d'applications_avec_wpkg
+http://wwdeb.crdp.ac-caen.fr/mediase3/index.php/FaqWpkg#Contraintes_que_doit_respecter_un_xml_officiel
+
+
+Présentation des exécutables nécessaires:
+
+1)allpackages.bat
+Cet exécutable est appelé à la fin de la première installation réussi  par wpkg.js.
+Il crée un fichier allpackages.xml à partir de la liste des xml du scribe et du fichier wpkg.xwml du poste
+ dans c:\netinst sur chaque poste.
+Celui contient tous les packages installés sur le poste.
+Il est créé si il n'existe pas ou bien si il ne date pas du jour même.
+
+2)AnalyseCategory.bat AnalyseCategory.js et AnalyseCategory.xls
+Ces scripts permettent de réorganiser les menus démarrer de All Users par les installations wpkg,
+de supprimer les raccourcis lors du remove
+Auteur : Olivier Lacroix et modifié pour scribe par David Pailler
+a)AnalyseCategory.xls
+C'est le script originel de se3, il permet de retraiter allpackages.xml il est utilisé par AnalyseCategory.js.
+
+b)AnalyseCategory.js
+Appelé par AnalyseCategory.bat, à partir de AnalyseCategory.xsl et allpackages.xml, il génère un fichier C:\netinst\PackagesCategory.txt
+contenant le nom de chaque package installé sur le poste et dans quelle catégorie il se trouve:
+Exemple de contenu de ce fichier:
+Freemind;Informatique
+biologie1;SVT
+hominines;SVT
+UltraDefrag;SystŠme
+Scratch;Math‚matiques
+SalsaJ;Sciences Physiques
+loeil;SVT
+physapp;Sciences Physiques
+SetAcl;SystŠme
+Delprof2;SystŠme
+aplussuite;Bureautique
+Chroma;Sciences physiques
+Sketchup;Technologie-SI
+vostok;SVT
+sismolog;SVT
+anagene2;SVT
+LiveMovieMaker;Multim‚dia
+chemsketch;Sciences Physiques
+Java;SystŠme
+Geogebra;Math‚matiques
+smartview;Math‚matiques
+Alpes;SVT
+SweetHome3D;Technologie-SI
+
+c)AnalyseCategory.bat
+C'est le second exécutable appelé par wpkg.js.
+Lire:
+http://wwdeb.crdp.ac-caen.fr/mediase3/index.php/FaqWpkg#Voici_un_fichier_xml_type_comment.C3.A9_:
+Plus particulièrement le paragraphe: classement automatique des raccourcis dans le menu démarrer : 
+Voir aussi les commentaires dans l'exécutable.
+
+David Pailler

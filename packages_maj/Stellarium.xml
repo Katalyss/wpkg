@@ -1,0 +1,32 @@
+<package 
+ id="Stellarium"
+ name="Stellarium : Planetarium 3D open-source"
+ revision="%version%.1"
+ priority="1"
+ reboot="false">
+
+<eoledl dl="https://github.com/Stellarium/stellarium/releases/download/v%version%/stellarium-%version%-win32.exe" destname="/physique/Stellarium/stellarium-%version%-win32.exe" />
+<eoledl dl="https://github.com/Stellarium/stellarium/releases/download/v%version%/stellarium-%version%-win64.exe" destname="/physique/Stellarium/stellarium-%version%-win64.exe" />
+
+ <variable name="version" value="0.18.3" />
+ <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+ <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+ <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+ <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+ 
+<check type="uninstall" condition="exists" path="Stellarium %version%"/>
+
+<!-- installation selon architecture -->
+<install cmd='"%SOFTWARE%\physique\Stellarium\stellarium-%version%-win32.exe" /VERYSILENT' architecture='x86' />
+<!-- désinstallation de la version 32 bits si elle existe sur x64, sinon il sort avec l'erreur 1605 -->
+<install cmd="%ProgramFiles%\Stellarium\unins000.exe /VERYSILENT" architecture='x64' ><exit code='any' /></install>
+<install cmd='"%SOFTWARE%\physique\Stellarium\stellarium-%version%-win64.exe" /VERYSILENT' architecture='x64' />
+
+<upgrade include='install'/>
+
+<downgrade include='upgrade' />
+
+<remove cmd="%ProgramFiles%\Stellarium\unins000.exe /VERYSILENT"/>
+<remove cmd='%COMSPEC% /C rmdir /S /Q "%PROGRAMFILES%\Stellarium"' />
+
+</package>

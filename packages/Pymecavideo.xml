@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="Pymecavideo"
+    name="Pymecavideo"
+    revision="%version%.1"
+    reboot="false"
+    priority="70">
+
+    <variable name="version" value="6.3" />
+
+    <eoledl dl="http://download.tuxfamily.org/oppl/windows/pymecavideo_%version%_setup.exe" destname="pymecavideo/pymecavideo_%version%_setup.exe" />
+
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+
+    <check type='file' condition="versiongreaterorequal" path='%programfiles%\pymecavideo\pymecavideo.exe' value='6.3.0.0'/>
+
+    <install cmd='"%SOFTWARE%\pymecavideo\pymecavideo_6.3_setup.exe" /VERYSILENT /NORESTART "'/>
+
+    <upgrade include="install" />
+
+    <downgrade include="upgrade" />
+
+    <remove cmd='"%PROGRAMFILES%\pymecavideo\unins000.exe" /VERYSILENT /NORESTART' />
+</package>
+</packages>

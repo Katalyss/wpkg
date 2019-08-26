@@ -1,0 +1,34 @@
+<package
+    id="Vlc"
+    name="VideoLAN Client : lecteur Multimedia"
+    revision="%version%.1"
+    priority="50"
+    reboot="false">
+
+  <!-- declaration des variables utiles pour le XML -->
+    <variable name="version" value="3.0.8"/>
+ 
+  <!-- declaration des variables generales -->
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x86"/>
+    <variable name="BDR" value="HKEY_LOCAL_MACHINE\SOFTWARE\Wow6432Node\Microsoft\Windows\CurrentVersion\Uninstall" architecture="x64"/>
+
+<eoledl dl="https://get.videolan.org/vlc/%version%/win64/vlc-%version%-win64.exe" destname="vlc/vlc-%version%-win64.exe"/>
+
+<check type="registry" condition="equals" path="%BDR%\VLC media player\DisplayVersion" value="%version%"/>
+
+<install timeout='150' cmd='%COMSPEC% /c if exist "%PROGRAMFILES%\VideoLAN\VLC\uninstall.exe" "%PROGRAMFILES%\VideoLAN\VLC\uninstall.exe" /S _?=%PROGRAMFILES%\VideoLAN\VLC'/>
+<install timeout='150' cmd='%COMSPEC% /C if exist "%PROGRAMFILES%\VideoLAN\VLC" rmdir /S /Q "%PROGRAMFILES%\VideoLAN"'/>
+<install timeout='150' cmd='%COMSPEC% /C start /wait "VLC" "%SOFTWARE%\vlc\vlc-%version%-win32.exe" /S /NCRC /D="%PROGRAMFILES%"'/>
+
+<downgrade include="install"/>
+
+<upgrade include="install"/>
+
+<remove cmd='%PROGRAMFILES%\VideoLAN\VLC\uninstall.exe /S _?=%PROGRAMFILES%\VideoLAN\VLC'><exit code="any"/></remove>
+<remove cmd='%COMSPEC% /C rmdir /S /Q "%PROGRAMFILES%\VideoLAN"'><exit code="any"/></remove>
+
+</package>
