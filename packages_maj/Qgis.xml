@@ -12,7 +12,7 @@
     <check type="uninstall" condition="exists" path="Quantum GIS Lisboa %version% Lisboa" />
     
     <!--  dl=http://qgis.org/downloads/QGIS-OSGeo4W-%version%-1-Setup.exe --> 
-    <eoledl dl="http://qgis.org/downloads/QGIS-OSGeo4W-%version%-1-Setup.exe" destname="qgis\QGIS-OSGeo4W-%version%-1-Setup.exe" />
+    <eoledl dl="https://qgis.org/downloads/QGIS-OSGeo4W-%version%-1-Setup-x86_64.exe" destname="qgis\QGIS-OSGeo4W-%version%-1-Setup-x86_64.exe" />
     
     <install cmd='%SOFTWARE%\qgis\unattended.cmd'/>
     

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!-- FreeWare -->
+<packages>
+<package
+    id="googlechrome"
+    name="Google Chrome"
+    revision="%version%"
+    priority="30"
+    reboot="false">
+    <variable name="version" value="76.0.3809.132" />
+    <variable architecture="x86" name="PROGFILES" value="%PROGRAMFILES%" />
+    <variable architecture="x64" name="PROGFILES" value="%PROGRAMFILES(X86)%" />
+    <variable name="PKG_KEY"           value="HKLM\SOFTWARE\Policies\Google\Update"/>
+    <variable name="PKG_VALUE"         value="Update{4DC8B4CA-1BDA-483E-B5FA-D3C12E15B62D}"/>
+    <variable name="PKG_DATA"          value="0"/>
+
+    <eoledl dl="https://cloud.google.com/chrome-enterprise/browser/download/thankyou?platform=WIN64_MSI&channel=stable&usagestats=0#" destname="google/googlechromestandaloneenterprise64.msi" />
+
+    <check type="uninstall" condition="exists" path="Google Chrome" />
+    <check type="file" condition="versionequalto" path="%PROGFILES%\Google\Chrome\Application\chrome.exe" value="%version%" />
+    <check type="registry" condition="equals" path="%PKG_KEY%\%PKG_VALUE%" value="%PKG_DATA%" />
+
+    <install cmd="taskkill /F /IM chrome.exe">
+        <exit code="any" />
+    </install>
+    <install cmd='msiexec /qn /norestart /i "%SOFTWARE%\google\GoogleChromeStandaloneEnterprise-%version%.msi"' />
+    <install cmd='reg add %PKG_KEY% /v %PKG_VALUE% /d %PKG_DATA% /t REG_DWORD /f'/>
+
+    <downgrade include="install" />
+
+    <upgrade include="install" />
+
+    <remove cmd="taskkill /F /IM chrome.exe">
+        <exit code="any" />
+    </remove>
+    <remove cmd='msiexec /qn /x "%SOFTWARE%\google\GoogleChromeStandaloneEnterprise-%version%.msi"' />
+    <remove cmd='reg delete %PKG_KEY% /v %PKG_VALUE% /f'/>
+</package>
+</packages>

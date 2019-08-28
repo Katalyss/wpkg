@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- OpenSource -->
+<packages>
+<package
+    id="ganttproject"
+    name="GanttProject : logiciel de gestion de projet"
+    revision="%version%.1"
+    priority="10">
+    
+    <variable name="version" value="2.8.10" /> 
+    <variable name="release" value="2363" />
+    <variable name="version_short" value="2.8" />
+    
+    <!-- <depends package-id="Java" /> -->
+    
+    <variable name="PROGFILES" value="%PROGRAMFILES%" architecture="x86"/>
+    <variable name="PROGFILES" value="%PROGRAMFILES(X86)%" architecture="x64"/>
+
+    <eoledl dl="https://www.ganttproject.biz/dl/%version%/win" destname="gant\ganttproject-%version%-r%release%.exe" />
+	
+    <check type="uninstall" condition="exists" path="GanttProject" />
+    <check type="file" condition="exists" path="%PROGFILES%\GanttProject-%version_short%\ganttproject.exe" />
+    
+    <install cmd='%SOFTWARE%\gant\ganttproject-%version%-r%release%.exe /S /NCRC'/>
+	<install cmd='%COMSPEC% /c assoc .mpp=GanttProject.MPP' />
+	<install cmd='%COMSPEC% /c ftype GanttProject.MPP="%PROGFILES%\GanttProject-%version_short%\ganttproject.exe" "%1"' />
+
+    <upgrade include='install' />
+
+    <downgrade include='upgrade' />
+
+    <remove cmd='%PROGFILES%\GanttProject-%version_short%\uninstall.exe" /S'/>
+</package>
+</packages>

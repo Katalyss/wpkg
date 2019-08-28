@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="Lilimath_Reloaded"
+    name="Lilimath Reloaded"
+    revision="21" reboot="false"
+    category="Mathématiques"
+    lnk="Lilimath.lnk"
+    priority="10">
+
+<!-- Version basee sur l'utilisation de dosbox et de la version dos modifiee pour linux par Bruno Kostrzewa http://b.kostrzewa.free.fr/lilinux/index.html 
+    modifiee de façon a avoir la centralisation des résultats et le module de gestion actif.Il faut en plus creer un dossier
+    %PARTAGE%\liliscore et régler les ACL dessus en ecriture pour les profs et les eleves :R W -->
+
+    <variable name="PROGRAMFILES" value="%Systemdrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%Systemdrive%\PROGRA~2" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\System32\cscript.exe" architecture="x86"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="scriptCLG" value="%PROGRAMFILES%\%dossier%\lilimathclg.bat"/>
+    <variable name="BAT" value="%logiciel%.bat"/>
+    <variable name="SCRIBE" value="scribe"/>
+    <variable name="Doscribe" value="Lilimath"/>
+    <variable name="logiciel" value="lilimath"/>
+    <variable name="dossier" value="LILIMATH"/>
+    <variable name="ZIP" value="%logiciel%dos.zip"/>
+    <variable name="partage" value="\\%SCRIBE%\commun\logiciels"/>
+    <variable name="SOFTWARE" value="%SOFTWARE%"/>
+    <variable name="TOOLS" value="%SOFTWARE%\tools"/>
+
+    <depends package-id="7zip"/>
+    <depends package-id="windows311"/>
+    <depends package-id="dosbox"/>
+    <depends package-id="nircmd"/>
+
+    <!-- le lien suivant amene au fichier a telelcharger , mais il faut le telecharger a la main-->
+    <eoledl dl="http://lilimath.free.fr/zipfiles/lilimath.zip" destname="%Doscribe%/lilimath.zip" />
+
+    <eoledl dl='https://dev-eole.ac-dijon.fr/attachments/download/1516/NUMLOCK.zip' destname="%doscribe%/NUMLOCK.zip"/>
+
+    <check type="file" condition="exists" path="%PROGRAMFILES%\%dossier%\%logiciel%.bat"/>
+
+    <install include="remove"/>
+    <install cmd="%ComSpec% /C %SystemDrive%\PROGRA~1\7-Zip\7z.exe x -o&quot;%SystemDrive%\%logiciel%w7&quot; -y -bd &quot;%SOFTWARE%\%Doscribe%\%ZIP%&quot; &gt;NUL"/>
+    <install cmd="%ComSpec% /C echo @echo Off &gt; &quot;%SystemDrive%\%logiciel%w7\setup.bat&quot;" />
+    <install cmd="%ComSpec% /C echo Pushd %SystemDrive% &gt;&gt; &quot;%SystemDrive%\%logiciel%w7\setup.bat&quot;" />
+    <install cmd="%ComSpec% /C echo cd %SystemDrive%\%logiciel%w7 &gt;&gt; &quot;%SystemDrive%\%logiciel%w7\setup.bat&quot;" />
+    <install cmd="%ComSpec% /C echo call INSTALL.BAT &gt;&gt; &quot;%SystemDrive%\%logiciel%w7\setup.bat&quot;" />
+    <install cmd="%ComSpec% /C echo exit &gt;&gt; &quot;%SystemDrive%\%logiciel%w7\setup.bat&quot;" />
+
+    <install cmd="%ComSpec% /C &quot;%SystemDrive%\%logiciel%w7\setup.bat&quot;  &gt;NUL" />
+
+    <install cmd="%ComSpec% /C move /Y C:\%dossier% %PROGRAMFILES%\%dossier%" />
+    <install cmd="%ComSpec% /C %SystemDrive%\PROGRA~1\7-Zip\7z.exe x -o&quot;%PROGRAMFILES%\%dossier%&quot; -y -bd &quot;%SOFTWARE%\%Doscribe%\NUMLOCK.zip&quot; &gt;NUL"/>
+    <install cmd="%ComSpec% /C copy /Y %PROGRAMFILES%\DOSBOX-0.74\dosconf.conf %PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf"/>
+
+    <install cmd="%ComSpec% /C echo mount C %PROGRAMFILES% &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;" />
+    <install cmd="%ComSpec% /C echo C: &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;"/>
+
+    <install cmd="%ComSpec% /C echo CD %dossier% &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;"/>
+    <install cmd="%ComSpec% /C echo LOCKS.EXE &gt;&gt; &quot;%PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf&quot;"/>
+
+    <install cmd="%ComSpec% /C echo @echo Off &gt;&gt; &quot;%scriptCLG%&quot;" />
+    <install cmd="%ComSpec% /C echo xcopy &quot;%PARTAGE%\liliscore\*.sco&quot; &quot;%PROGRAMFILES%\%dossier%\exer6&quot; /F /R /Y /Z &gt;&gt; &quot;%scriptCLG%&quot;"/>
+    <install cmd="%ComSpec% /C echo attrib -a &quot;%PROGRAMFILES%\%dossier%\exer6\*.sco&quot; &gt;&gt; &quot;%scriptCLG%&quot;" />
+    <install cmd="%ComSpec% /C echo Pushd &quot;%PROGRAMFILES%\%dossier%&quot; &gt;&gt; &quot;%scriptCLG%&quot;"/>
+    <install cmd="%ComSpec% /C echo  &quot;%PROGRAMFILES%\DOSBox-0.74\dosbox.exe&quot; &quot;LILIMATH.BAT&quot; -exit -conf %PROGRAMFILES%\%dossier%\dosconf-%logiciel%.conf &gt;&gt; &quot;%scriptCLG%&quot;"/>
+    <install cmd="%ComSpec% /C echo xcopy &quot;%PROGRAMFILES%\%dossier%\exer6\*.sco&quot; &quot;%PARTAGE%\liliscore\&quot; /F /R /Y /Z /A &gt;&gt; &quot;%scriptCLG%&quot;"/>
+    <install cmd="%ComSpec% /C echo exit &gt;&gt; &quot;%scriptCLG%&quot;" />
+
+<!--creation du raccourcis dans allusers -->
+    <install cmd="%ComSpec% /C %TOOLS%\nircmd.exe shortcut &quot;%scriptCLG%&quot;  &quot;~$folder.common_programs$&quot; &quot;Lilimath&quot; &quot;&quot; &quot;%PROGRAMFILES%\%dossier%\lilimath.ico&quot; &quot;&quot; &quot;MIN&quot; " />
+
+<!-- menage-->
+    <install cmd="%ComSpec% /C if exist &quot;%SystemDrive%\%ZIP%&quot; del /q  &quot;%SystemDrive%\%ZIP%&quot;"/>
+    <install cmd="%ComSpec% /C If exist &quot;%SystemDrive%\%dossier%w7&quot; rmdir /S /Q &quot;%SystemDrive%\%dossier%w7&quot;"/>
+
+<!--creation d'un fichier ini: peut-etre inutile maintenant-->
+    <install cmd="%ComSpec% /C echo. &gt;&gt; %windir%\lilimath.ini"/>
+
+<!-- mise en place des droits minima pour la creation des fichiers de score et le bon fonctionnement de dosbox: maintenant regle dans le install.bat-->
+    <install cmd="%ComSpec% /C %TOOLS%\CACLS.EXE &quot;%windir%\lilimath.ini&quot; /E /G BUILTIN\Utilisateurs:C &gt;NUL" timeout="120" />
+    <install cmd="%ComSpec% /C %TOOLS%\CACLS.EXE &quot;%PROGRAMFILES%\%dossier%\exer6&quot; /E  /G BUILTIN\Utilisateurs:C &gt;NUL" timeout="120" />
+    <install cmd="%ComSpec% /C %TOOLS%\CACLS.EXE &quot;%PROGRAMFILES%\%dossier%&quot; /E /G BUILTIN\Utilisateurs:C &gt;NUL" timeout="120" />
+
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd="%ComSpec% /C if exist &quot;%PROGRAMFILES%\Lilimath Reloaded\unins000.exe&quot; start &quot;remove&quot; /wait &quot;%PROGRAMFILES%\Lilimath Reloaded\unins000.exe&quot; /SILENT"><exit code="-1"/>
+    </remove>
+    <remove cmd="%ComSpec% /C If exist &quot;%PROGRAMFILES%\Lilimath Reloaded&quot; rmdir /S /Q &quot;%PROGRAMFILES%\Lilimath Reloaded&quot;"/>
+    <remove cmd="%ComSpec% /C If exist &quot;%PROGRAMFILES%\%dossier%&quot; rmdir /S /Q &quot;%PROGRAMFILES%\%dossier%&quot; "/>
+    <remove cmd="%ComSpec% /C if exist &quot;%AllUsersPrograms%\Lilimath&quot; rmdir /S /Q &quot;%AllUsersPrograms%\Lilimath&quot; "/>
+    <remove cmd="%ComSpec% /C if exist &quot;%AllUsersPrograms%\Mathématiques\Lilimath&quot; rmdir /S /Q &quot;%AllUsersPrograms%\mathématiques\Lilimath&quot; "/>
+    <remove cmd="%ComSpec% /C if exist &quot;%AllUsersPrograms%\gestion_lilimath.lnk&quot; del /q  &quot;%AllUsersPrograms%\gestion_lilimath.lnk&quot;"/>
+    <remove cmd="%ComSpec% /C if exist &quot;%PROGRAMFILES%\%BAT%&quot; del /q  &quot;%PROGRAMFILES%\%BAT%&quot;"/>
+
+</package>
+</packages>

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="dosbox"
+    name="DOSBox 0.74"
+    reboot="false"
+    revision="0.74.0.1"
+    priority="80"
+    category="Système"  >
+
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~1" architecture="x86"/>
+    <variable name="PROGRAMFILES" value="%SystemDrive%\PROGRA~2" architecture="x64"/>
+    <variable name="ComSpec" value="%SystemRoot%\System32\cmd.exe" architecture="x86"/>
+    <variable name="ComSpec" value="%SystemRoot%\SysWOW64\cmd.exe" architecture="x64"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\System32\cscript.exe" architecture="x86"/>
+    <variable name="CSCRIPT" value="%SystemRoot%\SysWOW64\cscript.exe" architecture="x64"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Menu Démarrer\Programmes" os="5\.\d\.\d{4}"/>
+    <variable name="AllUsersPrograms" value="%ALLUSERSPROFILE%\Microsoft\Windows\Start Menu\Programs" os="6\.\d\.\d{4}"/>
+    <variable name="version" value="0.74"/>
+    <variable name="logiciel" value="DOSBox"/>
+    <variable name="EXE" value="%logiciel%%version%-win32-installer.exe"/>
+    <variable name="doscribe" value="dosbox"/>
+    <variable name="dossier" value="%logiciel%-%version%"/>
+
+    <eoledl dl="https://sourceforge.net/projects/dosbox/files/dosbox/%version%-3/DOSBox%version%-3-win32-installer.exe/download"  destname="%doscribe%/%EXE%"/>
+
+    <check type="logical" condition="and">
+        <check type="file" condition="versiongreaterorequal" path="%PROGRAMFILES%\%dossier%\%logiciel%.exe" value="%version%.0.0"/>
+        <check type="file" condition="exists" path="%PROGRAMFILES%\%dossier%\dosconf.conf" />
+    </check>
+
+    <install cmd="%ComSpec% /c &quot;%SOFTWARE%\%Doscribe%\%EXE%&quot; /S /NCRC"/>
+    <install cmd="%ComSpec% /C %PROGRAMFILES%\DOSBox-0.74\%logiciel%.exe -c &quot;config.com -writeconf %PROGRAMFILES%\%dossier%\dosconf.conf&quot;" timeout="30">
+    <exit code="any"/>
+    </install>
+    <install cmd="taskkill /F /IM %logiciel%.exe">
+        <exit code="0"/>
+        <exit code="128"/>
+        <exit code="-1073741515"/>
+    </install>
+    <install cmd="%ComSpec% /C if exist &quot;%AllUsersPrograms%\%dossier%&quot; rmdir /S /Q &quot;%AllUsersPrograms%\%dossier%&quot; "/>
+    
+    <upgrade include="remove"/>
+    <upgrade include="install"/>
+
+    <downgrade include="upgrade"/>
+
+    <remove cmd='%ComSpec% /c if exist &quot;%PROGRAMFILES%\%dossier%\uninstall.exe&quot; call &quot;%PROGRAMFILES%\%dossier%\uninstall.exe&quot; /S /NCRC' />
+    <remove cmd='%ComSpec% /c ping -n 5 127.0.0.1'/>
+    <remove cmd="%ComSpec% /C if exist &quot;%PROGRAMFILES%\%dossier%&quot;  rmdir /S /Q  &quot;%PROGRAMFILES%\%dossier%&quot;"/>
+</package>
+</packages>
