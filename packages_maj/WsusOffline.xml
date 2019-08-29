@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<packages>
+<package
+    id="wsusoffline"
+    name="wsusoffline"
+    reboot="false"
+    execute="always"
+    priority="1"
+    revision="4">
+
+    <variable name="LocalInstallLogDir" value="%SYSTEMDRIVE%\netinst\logs" />
+    <variable name="PrimoInstallLog" value="%LocalInstallLogDir%\offlineupdate-install.log" />
+    <variable name="UninstallLog" value="%LocalInstallLogDir%\wsusoffline-uninstall.txt" />
+    <!--
+         Penser à créer le dossier "%SOFTWARE%\.EtatsClients\wsusoffline"
+         Ce dossier doit être accessible en écriture pour les machines
+         Peut être créer depuis Windows (créer le dossier puis "Propriétés" > "Sécurité" > "Avancées", "Tout le monde", "Contrôle total")
+         Depuis le serveur cela peut-être fait avec ces commandes :
+          cd /home/wpkg/softwares
+          mkdir -p .EtatsClients/wsusoffline/
+          setfacl -m u::-wx,g::-wx,o::-wx .EtatsClients
+          setfacl -dm u::rwx,g::rwx,o::rwx .EtatsClients
+          setfacl -m u::-wx,g::-wx,o::-wx .EtatsClients/wsusoffline
+          setfacl -dm u::rwx,g::rwx,o::rwx .EtatsClients/wsusoffline
+
+    -->
+    <variable name="InstallLogDir" value="%SOFTWARE%\.EtatsClients\wsusoffline" />
+    <!--
+    <eoledl dl="http://bientotenligne/install.bat" destname="wsusoffline/" />
+    <eoledl dl="http://bientotenligne/wsusoffline/offlineupdate.bat" destname="wsusoffline/" />
+    -->
+    <eoledl dl="http://download.wsusoffline.net/wsusoffline118.zip" destname="wsusoffline/" unzip="1"/>
+
+    <!-- mkdir est récursif -->
+    <install cmd='%COMSPEC% /C if not exist "%LocalInstallLogDir%" mkdir "%LocalInstallLogDir%"'/>
+    <install cmd='%COMSPEC% /C if not exist "%PrimoInstallLog%" call %SOFTWARE%\wsusoffline\install.bat>%PrimoInstallLog% 2>&amp;1' />
+    <install cmd='%COMSPEC% /v:ON /c %SOFTWARE%\wsusoffline\offlineupdate.bat>%InstallLogDir%\%Computername%-wsusoffline.txt 2>&amp;1' timeout='90000' />
+
+    <upgrade include="install" />
+    <downgrade include="upgrade" />
+
+    <remove cmd='%COMSPEC% /c call "%SOFTWARE%\wsusoffline\install.bat" Uninstall>%UninstallLog% 2>&amp;1' />
+
+</package>
+</packages>
